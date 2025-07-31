@@ -9,7 +9,7 @@ public class Enemy : PlayableObject
     protected Transform target;
     [SerializeField] protected float speed;
 
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
 
     public int ScoreValue;
 

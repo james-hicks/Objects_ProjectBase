@@ -16,6 +16,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] Player player;
 
+    [Header("Rapid Fire Indicator")]
+    [SerializeField] private GameObject rapidFireIndicator;     
+    [SerializeField] private Slider rapidFireDurationBar;       
+    [SerializeField] private TextMeshProUGUI rapidFireTimeText; 
+
+    private bool isTrackingRapidFire = false;
+    private float rapidFireStartTime;
+    private float rapidFireDuration;
+
     private ScoreManager scoreManager;
 
     private void Start()
@@ -26,14 +35,69 @@ public class UIManager : MonoBehaviour
 
         GameManager.GetInstance().OnGameStart += GameStarted;
         GameManager.GetInstance().OnGameOver += GameOver;
+
+        // Hide rapid fire indicator initially
+        if (rapidFireIndicator != null)
+            rapidFireIndicator.SetActive(false);
     }
 
-    //private void OnDisable()
-    //{
-    //    player.OnHealthSet -= SetHealthBar;
-    //    player.OnHealthUpdate -= UpdateHealth;
-    //}
+    void Update()
+    {
+        // Update rapid fire indicator
+        if (isTrackingRapidFire)
+        {
+            UpdateRapidFireIndicator();
+        }
+    }
 
+    //tracking the ShotBarrage
+    public void StartRapidFireIndicator(float duration)
+    {
+        isTrackingRapidFire = true;
+        rapidFireStartTime = Time.time;
+        rapidFireDuration = duration;
+
+        if (rapidFireIndicator != null)
+            rapidFireIndicator.SetActive(true);
+
+        if (rapidFireDurationBar != null)
+        {
+            rapidFireDurationBar.maxValue = duration;
+            rapidFireDurationBar.value = duration;
+        }
+    }
+
+    public void StopRapidFireIndicator()
+    {
+        isTrackingRapidFire = false;
+
+        if (rapidFireIndicator != null)
+            rapidFireIndicator.SetActive(false);
+    }
+
+    //RapidFire indicator UI
+    private void UpdateRapidFireIndicator()
+    {
+        float timeRemaining = rapidFireDuration - (Time.time - rapidFireStartTime);
+
+        if (timeRemaining <= 0)
+        {
+            StopRapidFireIndicator();
+            return;
+        }
+
+        // Update progress bar
+        if (rapidFireDurationBar != null)
+        {
+            rapidFireDurationBar.value = timeRemaining;
+        }
+
+        // Update time text
+        if (rapidFireTimeText != null)
+        {
+            rapidFireTimeText.text = $"Rapid Fire: {timeRemaining:F1}s";
+        }
+    }
 
     public void SetHealthBar(float maxHealth, float currentHealth)
     {
@@ -77,7 +141,6 @@ public class UIManager : MonoBehaviour
 
         gameOverScore.text = "SCORE: " + GameManager.GetInstance().scoreManager.GetScore().ToString();
     }
-
 
     public void Menu()
     {
