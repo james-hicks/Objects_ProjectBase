@@ -9,16 +9,16 @@ public class EnemyPistol : Enemy
 
     private const string PLAYER_TAG = "Player";
     [Header("default Weapon Info")]
-    [SerializeField] private float weaponDamage = 1f;
-    [SerializeField] private float bulletSpeed = 10f;
-    [SerializeField] private Bullet bulletPrefab;
+    [SerializeField] public float weaponDamage = 1f;
+    [SerializeField] public float bulletSpeed = 10f;
+    [SerializeField] public Bullet bulletPrefab;
     private float timer = 0f;
               
     private float shootingRate;    
     public float shootingRange;
     public float shotDamage;
     public float shotRate;
-    private float nextShotTime = 0f;
+    public float nextShotTime = 0f;
     
     public float rotationSpeed = 5f;
     public Transform firePoint;
@@ -35,7 +35,7 @@ public class EnemyPistol : Enemy
     protected override void Start()
     {
         base.Start();
-        health = new Health(10, 0);
+        health = new Health(30, 0);
 
         
         // find player

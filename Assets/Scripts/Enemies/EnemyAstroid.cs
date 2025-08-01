@@ -8,11 +8,11 @@ public class EnemyAstroid : Enemy
     public float meleeDamage;
     public float attackrange;
     public float attackTime;
-    public float destroyDistance = 10f;
+    public float destroyDistance = 20f;
 
     public Transform player;
-    private Vector3 moveDirection;
-    private bool hasCalculatedDirection = false;
+    protected Vector3 moveDirection;
+    protected bool hasCalculatedDirection = false;
 
     protected override void Start()
     {
@@ -32,8 +32,8 @@ public class EnemyAstroid : Enemy
             hasCalculatedDirection = true;
         }
         else
-        {            
-            Destroy(gameObject);
+        {
+            Die();
             return;
         }
 
@@ -56,7 +56,7 @@ public class EnemyAstroid : Enemy
         if (Vector2.Distance(transform.position, target.position) < attackrange)
         {
             Attack(attackTime);
-            Destroy(gameObject);
+            Die();
         }
 
         // Check if asteroid has moved too far away
@@ -65,7 +65,7 @@ public class EnemyAstroid : Enemy
             float distance = Vector3.Distance(transform.position, target.position);
             if (distance > destroyDistance)
             {
-                Destroy(gameObject);
+                Die();
             }
         }
     }
@@ -92,7 +92,7 @@ public class EnemyAstroid : Enemy
         if (player != null && player.health.GetCurrentHealth() > 0)
         {            
             Attack(attackTime);
-            Destroy(gameObject);
+            
         }
     }
 }

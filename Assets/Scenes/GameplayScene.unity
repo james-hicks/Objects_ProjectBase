@@ -3732,11 +3732,11 @@ MonoBehaviour:
   - {fileID: 344781408}
   - {fileID: 1027794782}
   - {fileID: 2018828588}
-  spawnRate: 2
+  spawnRate: 1
   pickupSpawner: {fileID: 1940415845}
   playerPrefab: {fileID: 4467654723593208974, guid: dd1530e3b04742e40859eb180b3d9b3d, type: 3}
   enemies:
-  - {fileID: 866974179382765526, guid: e3178f785ff11fa478751542ce6a688c, type: 3}
+  - {fileID: 2200947158520324694, guid: 93dec8720109e9541895030339c3e0cf, type: 3}
   scoreManager: {fileID: 1952982135}
   GameOver: 0
 --- !u!114 &1952982135

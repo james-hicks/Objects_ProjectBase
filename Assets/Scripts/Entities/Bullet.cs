@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
     [SerializeField] private float damage;
 
     private string targetTag;
@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
         Move();
     }
 
-    private void Move()
+    public void Move()
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
