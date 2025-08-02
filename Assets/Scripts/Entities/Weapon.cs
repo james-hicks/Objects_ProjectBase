@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Weapon
 {
@@ -18,6 +19,14 @@ public class Weapon
         Bullet tempBullet = GameObject.Instantiate(_bullet, _object.transform.position, _object.transform.rotation);
         tempBullet.SetBullet(damage, _targetTag, bulletSpeed);
 
+        GameObject.Destroy(tempBullet.gameObject, _timeToDie);
+    }
+
+    // scatter shoot weapon to shoot in a given direction
+    public void Shoot(Bullet _bullet, string _targetTag, PlayableObject _object, Quaternion rotation,  float _timeToDie = 5f)
+    {
+        Bullet tempBullet = GameObject.Instantiate(_bullet, _object.transform.position, rotation);
+        tempBullet.SetBullet(damage, "Enemy", bulletSpeed);
         GameObject.Destroy(tempBullet.gameObject, _timeToDie);
     }
 

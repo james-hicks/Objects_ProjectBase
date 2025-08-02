@@ -14,11 +14,15 @@ public class PlayerInput : MonoBehaviour
     private PickupNuke pickupNuke;
     private PickupShot pickupShot;
 
-
+    [Header("Rapid Fire Pickup Info")]
     private bool rapidFireActive = false;
     private float rapidFireEndTime = 0f;
     private float rapidFireRate = 0.1f;
     private float lastRapidFireTime = 0f;
+
+    [Header("Scatter Shot Pickup Info")]
+    private bool scatterShotActive = false;
+    private float scatterShotDuration = 0f;
 
     void Start()
     {
@@ -89,6 +93,17 @@ public class PlayerInput : MonoBehaviour
 
             Debug.Log("$Rapid Fire ended!");
         }
+
+        //scatter shot pick up
+        if (scatterShotActive)
+        {
+            player.scatterShoot();
+            scatterShotDuration -= Time.deltaTime;
+            if (scatterShotDuration <= 0)
+            {
+                scatterShotActive = false;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -153,5 +168,18 @@ public class PlayerInput : MonoBehaviour
         }
 
         Debug.Log($"Rapid Fire activated for {duration} seconds!");
+    }
+
+    //activate the scatter shoot
+    public void ActivateScatterShot(float duration)
+    {
+        scatterShotActive = true;
+        scatterShotDuration = duration;
+
+        UIManager uiManager = FindFirstObjectByType<UIManager>();
+        if (uiManager != null)
+        {
+            uiManager.StartScatterShotIndicator(duration);
+        }
     }
 }

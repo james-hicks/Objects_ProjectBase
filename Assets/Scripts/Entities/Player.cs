@@ -83,5 +83,27 @@ public class Player : PlayableObject
         health.RegenHealth();
         OnHealthUpdate?.Invoke(health.GetCurrentHealth());
     }
+
+    //scatter shoot method to shoot in 8 directions
+    public void scatterShoot()
+    {
+        Vector2[] direction = new Vector2[]
+        {
+            Vector2.up,
+            Vector2.down,
+            Vector2.left,
+            Vector2.right,
+            new Vector2(1, 1).normalized,
+            new Vector2(1, -1).normalized,
+            new Vector2(-1, 1).normalized,
+            new Vector2(-1, -1).normalized
+        };
+
+        foreach(Vector2 dir in direction)
+        {
+            Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg);
+            weapon.Shoot(bulletPrefab, "Enemy", this, rotation);
+        }
+    }
 }
 

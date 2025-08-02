@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] Player player;
 
+
     [Header("Rapid Fire Indicator")]
     [SerializeField] private GameObject rapidFireIndicator;     
     [SerializeField] private Slider rapidFireDurationBar;       
@@ -24,6 +25,14 @@ public class UIManager : MonoBehaviour
     private bool isTrackingRapidFire = false;
     private float rapidFireStartTime;
     private float rapidFireDuration;
+
+    [Header("Scatter Shot Indicator")]
+    [SerializeField] private GameObject scatterShotIndicator;
+    [SerializeField] private Slider scatterShotDurationBar;
+    [SerializeField] private TextMeshProUGUI scatterShotTimeText;
+    private bool scatterShotEnabled = false;
+    private float scatterShotDuration;
+    private float scatterShotStartTime;
 
     private ScoreManager scoreManager;
 
@@ -41,12 +50,17 @@ public class UIManager : MonoBehaviour
             rapidFireIndicator.SetActive(false);
     }
 
-    void Update()
+    public void Update()
     {
         // Update rapid fire indicator
         if (isTrackingRapidFire)
         {
             UpdateRapidFireIndicator();
+        }
+
+        if (scatterShotEnabled)
+        {
+            UpdateScatterShotIndicator();
         }
     }
 
@@ -96,6 +110,52 @@ public class UIManager : MonoBehaviour
         if (rapidFireTimeText != null)
         {
             rapidFireTimeText.text = $"Rapid Fire: {timeRemaining:F1}s";
+        }
+    }
+
+    public void StartScatterShotIndicator(float duration)
+    {
+        scatterShotEnabled = true;
+        scatterShotStartTime = Time.time;
+        scatterShotDuration = duration;
+
+        if (scatterShotIndicator != null)
+            scatterShotIndicator.SetActive(true);
+
+        if (scatterShotDurationBar != null)
+        {
+            scatterShotDurationBar.maxValue = duration;
+            scatterShotDurationBar.value = duration;
+        }
+    }
+
+    public void StopScatterShotIndicator()
+    {
+        scatterShotEnabled = false;
+        if (scatterShotIndicator != null)
+            scatterShotIndicator.SetActive(false);
+    }
+
+    private void UpdateScatterShotIndicator()
+    {
+        float timeRemaining = scatterShotDuration - (Time.time - scatterShotStartTime);
+
+        if (timeRemaining <= 0)
+        {
+            StopScatterShotIndicator();
+            return;
+        }
+
+        // Update progress bar
+        if (scatterShotDurationBar != null)
+        {
+            scatterShotDurationBar.value = timeRemaining;
+        }
+
+        // Update time text
+        if (scatterShotTimeText != null)
+        {
+            scatterShotTimeText.text = $"Scatter Shot: {timeRemaining:F1}s";
         }
     }
 
