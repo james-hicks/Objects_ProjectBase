@@ -1,14 +1,18 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class EnemyAstroidSmoke : EnemyAstroid
 {
-    [SerializeField] private GameObject areaEffectPrefab;
-    [SerializeField] private float areaEffectDuration = 5f;
-       
+    [Header("Smokescreen Settings")]
+    [SerializeField] private GameObject smokescreenPrefab;
+    [SerializeField] private float smokescreenDuration = 6f;
+    [SerializeField] private Vector3 smokescreenOffset = Vector3.zero;
 
-    // Track what caused the death
-    private bool shouldSpawnSmoke = false;
+    [Header("Spawn Conditions")]
+    [SerializeField] private bool spawnOnPlayerKill = true;
+    [SerializeField] private bool spawnOnBulletKill = true;
+    [SerializeField] private bool spawnOnBoundaryKill = false;
+
+    private bool shouldSpawnSmokescreen = false;
 
     protected override void Start()
     {
@@ -16,48 +20,54 @@ public class EnemyAstroidSmoke : EnemyAstroid
         health = new Health(10, 0);
     }
 
-    // Override Update to prevent smoke on out-of-bounds death
     protected override void Update()
     {
         if (!hasCalculatedDirection || target == null) return;
 
-        // Move in calculated direction
         transform.position += moveDirection * speed * Time.deltaTime;
 
-        // Check for attack range (collision with player)
         if (Vector2.Distance(transform.position, target.position) < attackrange)
         {
-            shouldSpawnSmoke = true; // Player collision = spawn smoke
+            if (spawnOnPlayerKill)
+            {
+                shouldSpawnSmokescreen = true;
+            }
             Attack(attackTime);
             Die();
         }
 
-        // Check if asteroid has moved too far away
         if (target != null)
         {
             float distance = Vector3.Distance(transform.position, target.position);
             if (distance > destroyDistance)
             {
-                shouldSpawnSmoke = false; // Out of bounds = no smoke
+                if (spawnOnBoundaryKill)
+                {
+                    shouldSpawnSmokescreen = true;
+                }
                 Die();
             }
         }
     }
 
-    // Override to handle damage from bullets
     public override void GetDamage(float damage)
     {
-        shouldSpawnSmoke = true; // Bullet hit = spawn smoke
+        if (spawnOnBulletKill)
+        {
+            shouldSpawnSmokescreen = true;
+        }
         base.GetDamage(damage);
     }
 
-    // Override collision to ensure smoke spawns
     void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
         if (player != null && player.health.GetCurrentHealth() > 0)
         {
-            shouldSpawnSmoke = true; // Player collision = spawn smoke
+            if (spawnOnPlayerKill)
+            {
+                shouldSpawnSmokescreen = true;
+            }
             Attack(attackTime);
             Die();
         }
@@ -65,12 +75,27 @@ public class EnemyAstroidSmoke : EnemyAstroid
 
     public override void Die()
     {
-        // Only spawn smoke if death was caused by bullets or player
-        if (shouldSpawnSmoke && areaEffectPrefab != null)
-        {            
-            AreaEffect.SpawnAreaEffect(areaEffectPrefab, transform.position, areaEffectDuration);
+        if (shouldSpawnSmokescreen && smokescreenPrefab != null)
+        {
+            SpawnSmokescreen();
         }
-       
         base.Die();
     }
+
+    private void SpawnSmokescreen()
+    {
+        Vector3 spawnPosition = transform.position + smokescreenOffset;
+        GameObject smokescreen = Instantiate(smokescreenPrefab, spawnPosition, Quaternion.identity);
+
+        if (smokescreenDuration > 0)
+        {
+            Destroy(smokescreen, smokescreenDuration);
+        }
+    }
+
+    public void SetSmokescreenPrefab(GameObject prefab)
+    {
+        smokescreenPrefab = prefab;
+    }
 }
+

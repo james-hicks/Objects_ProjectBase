@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Player : PlayableObject
 {
     [SerializeField] private Camera cam;
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
 
     [Header("Default Weapon Info")]
     [SerializeField] private float weaponDamage = 1f;

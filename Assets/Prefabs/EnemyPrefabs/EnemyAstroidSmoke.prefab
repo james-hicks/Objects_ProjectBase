@@ -128,8 +128,12 @@ MonoBehaviour:
   attackTime: 0
   destroyDistance: 10
   player: {fileID: 0}
-  areaEffectPrefab: {fileID: 1438538207426014201, guid: 93c3a87fc5728dd40af5346ab4666ee0, type: 3}
-  areaEffectDuration: 5
+  smokescreenPrefab: {fileID: 3702923198162442071, guid: 30482cbed33fc564fbb2d64ad84c2611, type: 3}
+  smokescreenDuration: 6
+  smokescreenOffset: {x: 0, y: 0, z: 0}
+  spawnOnPlayerKill: 1
+  spawnOnBulletKill: 1
+  spawnOnBoundaryKill: 0
 --- !u!1 &2238997724837635234
 GameObject:
   m_ObjectHideFlags: 0
