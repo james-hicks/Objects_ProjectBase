@@ -3,8 +3,9 @@ using UnityEngine;
 public class SmokescreenController : MonoBehaviour
 {
     public float slowdownPercentage = 0.5f; 
-    private Player player; 
-    private float originalPlayerSpeed;
+    private Player player;
+    private float originalPlayerSpeed = 1f;
+   
     private bool playerInside = false;
 
     void OnTriggerEnter2D(Collider2D other)
