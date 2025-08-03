@@ -3,72 +3,60 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manages core game behavior including enemy spawning, game restart,
+/// player reference tracking, and singleton access.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     [Header("Spawning")]
-    [SerializeField] private Transform[] spawnPositions;
-    [SerializeField] private float spawnRate;
+    [SerializeField] private Transform[] spawnPositions; // array to hold spawn points
+    [SerializeField] private float spawnRate = 1f; // rate at which enemies spawn
 
-    [SerializeField] private PickupSpawner pickupSpawner;
-
-    [Space]
-
-    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private PickupSpawner pickupSpawner; // reference to pickup spawner
+    [SerializeField] private GameObject playerPrefab; // reference to playerSpawn
 
     [Space]
-    [SerializeField] private GameObject[] enemies;
-
-    private Player player;
-
-    private bool isEnemySpawning = true;
-
-    public ScoreManager scoreManager;
-
-    public bool GameOver = false;
+    [SerializeField] private GameObject[] enemies; // array to hold enemy prefabs
+    private GameObject tempEnemy; // temporary reference to spawned enemy
+    private bool isEnemySpawning = true; // controls whether enemies should keep spawning
+    private Player player; // reference to the player
+    public ScoreManager scoreManager; // reference to the score manager
+    public UIManager uiManager;// ref to UI Manager
+    public bool GameOver = false; // flag to track if game is over
 
     public Action OnGameStart;
     public Action OnGameOver;
 
-
-
     /// <summary>
-    /// Singleton GameManager
+    /// Singleton Instance
     /// </summary>
-    private static GameManager instance;
-
+    private static GameManager instance; // static instance for singleton access
     public static GameManager GetInstance()
     {
-        return instance;
+        return instance; // returns the singleton instance
     }
 
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // prevent multiple instances
         }
 
-        instance = this;
-    }
+        instance = this; // assign current instance
 
-    private void Update()
-    {
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    CreateEnemy();
-        //}
-
-        if (GameOver & Input.GetKeyDown(KeyCode.Space))
+        if (uiManager == null)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            uiManager = FindFirstObjectByType<UIManager>(); 
         }
     }
-
-    private GameObject tempEnemy;
 
     private void CreateEnemy()
     {
+        // spawn a random enemy from the enemies array
         tempEnemy = Instantiate(enemies[UnityEngine.Random.Range(0, enemies.Length)]);
+        // at a random position from the spawnPositions array
         tempEnemy.transform.position = spawnPositions[UnityEngine.Random.Range(0, spawnPositions.Length)].position;
     }
 
@@ -76,30 +64,33 @@ public class GameManager : MonoBehaviour
     {
         while (isEnemySpawning)
         {
-            yield return new WaitForSeconds(1f / spawnRate);
-            CreateEnemy();
+            yield return new WaitForSeconds(1f / spawnRate); // wait based on spawn rate
+            CreateEnemy(); // spawn an enemy
         }
     }
 
     public void DisableSpawning()
     {
-        isEnemySpawning = false;
+        isEnemySpawning = false; // stop enemy spawning
     }
 
     public void NotifyDeath(Enemy enemy)
     {
+        // spawn a pickup at the enemy's death position
         pickupSpawner.SpawnPickup(enemy.transform.position);
     }
-
 
     public void FindPlayer()
     {
         try
         {
+            // find player by tag and get Player component
             player = GameObject.FindWithTag("Player").GetComponent<Player>();
-        } catch (NullReferenceException e)
+        }
+        catch (NullReferenceException e)
         {
-            Debug.Log("There is no player in the scene. Details: " + e.Message);
+            // log warning if player not found
+            Debug.LogWarning("There is no player in the scene. Details: " + e.Message);
         }
     }
 
@@ -107,8 +98,7 @@ public class GameManager : MonoBehaviour
     {
         player = Instantiate(playerPrefab, Vector2.zero, Quaternion.identity).GetComponent<Player>();
         GameOver = false;
-
-        player.OnDeath += StopGame;
+        player.OnDeath += StopGame; // when notified of player's death, stop game
 
         OnGameStart.Invoke();
         StartCoroutine(GameStarter());
@@ -116,16 +106,16 @@ public class GameManager : MonoBehaviour
 
     IEnumerator GameStarter()
     {
-        yield return new WaitForSeconds(2f);
-        isEnemySpawning = true;
+        yield return new WaitForSeconds(2f); //give 2 secs before game actually starts
+        isEnemySpawning = true; // start enemy spawning
         StartCoroutine(EnemySpawner());
     }
 
     public void StopGame()
     {
-        isEnemySpawning = false;
-        scoreManager.SetHighScore();
-
+        isEnemySpawning = false; // stop spawning enemies
+        scoreManager.SetHighScore(); // set High Score
+        
 
         StartCoroutine(GameStopper());
     }
@@ -158,6 +148,5 @@ public class GameManager : MonoBehaviour
     }
 
 
-
-    public Player GetPlayer() { return player; }
+    public Player GetPlayer() { return player; } // returns reference to player
 }

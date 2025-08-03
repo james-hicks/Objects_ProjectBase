@@ -1,27 +1,34 @@
 using System;
-using System.ComponentModel.Design.Serialization;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : PlayableObject
 {
-    [SerializeField] private Camera cam;
-    [SerializeField] private float speed;
+    [SerializeField] private Camera cam; // Reference to main camera for aiming
+    [SerializeField] private float speed = 5f;  // Move speed
 
     [Header("Default Weapon Info")]
     [SerializeField] private float weaponDamage = 1f;
     [SerializeField] private float bulletSpeed = 10f;
     [SerializeField] private Bullet bulletPrefab;
 
-
     public Action<float, float> OnHealthSet;
     public Action<float> OnHealthUpdate;
-
     public Action OnDeath;
 
-    //[Space]
-    //[Header("UI")]
+    // variables for rapid fire coroutine
+    private Coroutine rapidFireRoutine;
+    private bool rapidFireActive;
+    private float rapidFireRate;
 
+    public bool IsRapidFireActive => rapidFireActive;
+
+
+
+    [Space]
+    [Header("UI")]
+    [SerializeField] private Slider healthBar;
     private Rigidbody2D rb;
 
     private void Awake()
@@ -31,52 +38,91 @@ public class Player : PlayableObject
 
     private void Start()
     {
-        health = new Health(100, 0.5f, 50);
+        health = new Health(100, 0.5f, 70); // Initialize health (max HP, regen rate, start HP)
         OnHealthSet?.Invoke(health.GetMaxHealth(), health.GetCurrentHealth());
-
+        //healthBar.maxValue = health.GetMaxHealth();
         rb = GetComponent<Rigidbody2D>();
 
-        weapon = new Weapon("PlayerWeapon", weaponDamage, bulletSpeed);
+        weapon = new Weapon("PlayerWeapon", weaponDamage, bulletSpeed); //initialize weapon
     }
 
-    public override void Attack(float interval)
-    {
-        throw new System.NotImplementedException();
-    }
 
-    public override void Die()
-    {
-        Debug.Log("Player Died!");
-        OnDeath?.Invoke();
-        Destroy(gameObject);
-    }
 
     public override void Move(Vector2 direction, Vector2 target)
     {
-        // Move the player in the direction they need to move, based on their speed
+        // Move with keys (currently using placeholder direction)
         rb.linearVelocity = direction * speed * Time.deltaTime;
 
-        // Get the players position relative to the center of the camera, aka cam.worldToScreenPoint
+        // Calculate screen position for aiming
         var playerScreenPos = cam.WorldToScreenPoint(transform.position);
         target.x -= playerScreenPos.x;
         target.y -= playerScreenPos.y;
 
+        // Rotate to face mouse cursor
         float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
+    // shoot normally
     public override void Shoot()
     {
-        weapon.Shoot(bulletPrefab, "Enemy", this);
+        if (weapon != null)
+        {
+            // Call weapon shoot with "Enemy" as targetTag
+            weapon.Shoot(bulletPrefab, "Enemy", this);
+        }
     }
 
+    // Rapid fire during powerup time
+    public void StartRapidFire(float rate, float duration)
+    {
+        if (rapidFireRoutine != null) StopCoroutine(rapidFireRoutine);
+        rapidFireRoutine = StartCoroutine(RapidFire(duration, rate));
+    }
+
+    // rapid fire coroutine
+    private IEnumerator RapidFire(float duration, float rate)
+    {
+        rapidFireActive = true;
+        rapidFireRate = rate;
+
+        float elapsed = 0f;
+        float nextShotAt = 0f;
+
+        while (elapsed < duration)
+        {
+            // Only fire while the mouse is held
+            if (Input.GetMouseButton(0) && Time.time >= nextShotAt)
+            {
+                Shoot();
+                nextShotAt = Time.time + 1f / rapidFireRate;
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        rapidFireActive = false;
+        rapidFireRoutine = null;
+    }
+
+    // need to keep to avoid compiler errors
+    public override void Attack(float interval) { }
+
+    public override void Die()
+    {
+        Debug.Log("Player has died"); // Log death
+        OnDeath?.Invoke(); // Call player's death
+        Destroy(gameObject); // Destroy player
+    }
+
+    // Take damage implementation
     public override void GetDamage(float damage)
     {
-        base.GetDamage(damage);
-        Debug.Log("Player took " + damage + " Damage! " + health.GetCurrentHealth());
+        base.GetDamage(damage); // Call base to reduce health and check death
+        //Debug.Log("Player took " + damage + " damage. " + health.GetCurrentHealth());
         OnHealthUpdate?.Invoke(health.GetCurrentHealth());
     }
-
 
     private void Update()
     {
@@ -84,4 +130,3 @@ public class Player : PlayableObject
         OnHealthUpdate?.Invoke(health.GetCurrentHealth());
     }
 }
-
