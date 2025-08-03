@@ -99,7 +99,7 @@ public class GameManager : MonoBehaviour
             player = GameObject.FindWithTag("Player").GetComponent<Player>();
         } catch (NullReferenceException e)
         {
-            Debug.Log("There is no player in the scene.");
+            Debug.Log("There is no player in the scene. Details: " + e.Message);
         }
     }
 
@@ -133,20 +133,30 @@ public class GameManager : MonoBehaviour
     IEnumerator GameStopper()
     {
         isEnemySpawning = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f); //give 2 secs before game really ends
         GameOver = true;
-        foreach (Enemy item in FindObjectsOfType(typeof(Enemy)))
+
+        // Delete all enemies from screen
+        foreach (Enemy item in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
         {
             Destroy(item.gameObject);
         }
 
-        foreach (Pickup item in FindObjectsOfType(typeof(Pickup)))
+        // Delete all bullets from screen
+        foreach (Bullet item in FindObjectsByType<Bullet>(FindObjectsSortMode.None))
         {
             Destroy(item.gameObject);
         }
 
-        OnGameOver?.Invoke();
+        // Delete all pickups from screen
+        foreach (Pickup item in FindObjectsByType<Pickup>(FindObjectsSortMode.None))
+        {
+            Destroy(item.gameObject);
+        }
+
+        OnGameOver?.Invoke(); // call game over
     }
+
 
 
     public Player GetPlayer() { return player; }

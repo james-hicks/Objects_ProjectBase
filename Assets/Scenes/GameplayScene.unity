@@ -3501,6 +3501,7 @@ MonoBehaviour:
   enemies:
   - {fileID: 8089019432624135523, guid: 44be64e756f2d3f40aefee1bb52b48eb, type: 3}
   - {fileID: 3496358925418594841, guid: 27acfcc5acda3504084842118fc4c225, type: 3}
+  - {fileID: 8089019432624135523, guid: 9b1c542a481594c7896a402c97f8f109, type: 3}
   scoreManager: {fileID: 1952982135}
   GameOver: 0
 --- !u!114 &1952982135
