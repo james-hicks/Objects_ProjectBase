@@ -1340,11 +1340,11 @@ MonoBehaviour:
   menuHighScore: {fileID: 181547026}
   gameOverScore: {fileID: 708715320}
   healthBar: {fileID: 1634744268}
-  player: {fileID: 0}
+  player: {fileID: 5526704026702765035, guid: dd1530e3b04742e40859eb180b3d9b3d, type: 3}
   scoreText: {fileID: 298091209}
   highScoreText: {fileID: 950938701}
-  nukePanel: {fileID: 0}
-  nukeIconPrefab: {fileID: 0}
+  nukePanel: {fileID: 1083123416}
+  nukeIconPrefab: {fileID: 6279887786960042937, guid: 640f8c6fb83ef4423ba3d3746d7d0c14, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2488,7 +2488,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 3
-  m_Spacing: 1
+  m_Spacing: 2
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -3594,7 +3594,7 @@ MonoBehaviour:
   pickups:
   - pickup: {fileID: 65505071863493891, guid: 591fc663413a32b4782a6e2f97bf4ca1, type: 3}
     spawnWeight: 1
-  - pickup: {fileID: 7948393638367070215, guid: 254cf812fd708499382e6e8f5e3e62f5, type: 3}
+  - pickup: {fileID: 4388547319266525825, guid: fac47e34ca1114391b51a611432d7ece, type: 3}
     spawnWeight: 1
   - pickup: {fileID: 2101326978017427782, guid: 10094bce4c9b849fb8f628d47ce70220, type: 3}
     spawnWeight: 1
