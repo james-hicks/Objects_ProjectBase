@@ -303,4 +303,4 @@ MonoBehaviour:
   fireRate: 3
   weaponDamage: 1
   bulletSpeed: 10
-  bulletPrefab: {fileID: 5095800986106887841, guid: 03c580b9803b38048b1b0328ecc3e84a, type: 3}
+  bulletPrefab: {fileID: 5095800986106887841, guid: 406bdeff7304545caaae4e49a1f6844b, type: 3}
