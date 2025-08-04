@@ -1451,6 +1451,9 @@ MonoBehaviour:
   rapidFireIndicator: {fileID: 922650012}
   rapidFireDurationBar: {fileID: 922650014}
   rapidFireTimeText: {fileID: 2019385155}
+  scatterShotIndicator: {fileID: 0}
+  scatterShotDurationBar: {fileID: 0}
+  scatterShotTimeText: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3737,9 +3740,9 @@ MonoBehaviour:
   playerPrefab: {fileID: 4467654723593208974, guid: dd1530e3b04742e40859eb180b3d9b3d, type: 3}
   enemies:
   - {fileID: 866974179382765526, guid: e3178f785ff11fa478751542ce6a688c, type: 3}
-  - {fileID: 5090500115208669787, guid: ac98f58bb36543147b2c913c51297d1d, type: 3}
-  - {fileID: 2200947158520324694, guid: 93dec8720109e9541895030339c3e0cf, type: 3}
-  - {fileID: 9104219496184246683, guid: a75eaed65a5a0be4a8729dee1e5ce825, type: 3}
+  - {fileID: 882221697611725378, guid: 702710711f0bc7445b0bda0ca9407c64, type: 3}
+  - {fileID: 2810936912735487427, guid: 1ab5e070449c868409e64dd3ddafc7a8, type: 3}
+  - {fileID: 5135907506640146275, guid: d25abfa783f80624d983982d6fdbb0c3, type: 3}
   scoreManager: {fileID: 1952982135}
   GameOver: 0
 --- !u!114 &1952982135

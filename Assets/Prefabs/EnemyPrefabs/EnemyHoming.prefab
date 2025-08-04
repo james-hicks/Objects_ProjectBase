@@ -50,6 +50,7 @@ MonoBehaviour:
   enemyType: 0
   speed: 3
   ScoreValue: 300
+  onDeathExplosion: {fileID: -2424327636094117692, guid: 3cd72f8d121993444b74aa12d9585bf5, type: 3}
   weaponDamage: 1
   bulletSpeed: 10
   bulletPrefab: {fileID: -8564889030242076977, guid: 522fafdd3e3af0b49a724fd4cf8b37fd, type: 3}

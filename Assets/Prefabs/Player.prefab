@@ -141,6 +141,7 @@ MonoBehaviour:
   weaponDamage: 10
   bulletSpeed: 10
   bulletPrefab: {fileID: 5095800986106887841, guid: 03c580b9803b38048b1b0328ecc3e84a, type: 3}
+  onDeathExplosion: {fileID: -2424327636094117692, guid: 3cd72f8d121993444b74aa12d9585bf5, type: 3}
 --- !u!114 &6347951459929369613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cedac93ed0684e4da12fe3938438006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nukeExplosion: {fileID: 1435647593350552091, guid: 522fb6e16143d234e81e80f99ee84716, type: 3}
+  counterText: {fileID: 0}
 --- !u!50 &1588367066487196615
 Rigidbody2D:
   serializedVersion: 5

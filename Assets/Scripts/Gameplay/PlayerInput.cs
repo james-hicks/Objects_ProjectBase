@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Unity.Mathematics;
 
 [RequireComponent(typeof(Player))]
 public class PlayerInput : MonoBehaviour
@@ -8,6 +9,10 @@ public class PlayerInput : MonoBehaviour
     private float horizontal, vertical;
     private Vector2 lookTarget;
 
+    [Header("Nuke pickup Info")]
+    [SerializeField] ParticleSystem nukeExplosion;
+
+    private ParticleSystem explosionInstance;
     private int nukeCounter = 0;
     public TMP_Text counterText;
     private const int maxNukes = 3;
@@ -23,6 +28,7 @@ public class PlayerInput : MonoBehaviour
     [Header("Scatter Shot Pickup Info")]
     private bool scatterShotActive = false;
     private float scatterShotDuration = 0f;
+    
 
     void Start()
     {
@@ -141,6 +147,8 @@ public class PlayerInput : MonoBehaviour
         if (nukeCounter > 0)
         {
             nukeCounter -= 1;
+            explosionInstance = Instantiate(nukeExplosion, transform.position, quaternion.identity);
+            
             PickupNuke.DestroyAllEnemies();
             UpdateCounterDisplay();
 

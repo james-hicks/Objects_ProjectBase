@@ -1,4 +1,5 @@
 using System.Threading;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class EnemyMelee : Enemy
@@ -11,7 +12,7 @@ public class EnemyMelee : Enemy
     public float meleeDamage;
     public float rotationSpeed = 5f;
     private float nextAttackTime = 0f;
-    public float attackRate;    
+    public float attackRate;
     private float timer = 0;
 
     Transform playerTransform;
@@ -19,6 +20,8 @@ public class EnemyMelee : Enemy
     private bool isTracking = true;
     public float moveSpeed = 5f;
     public GameObject playerPrefab;
+
+    
 
     protected override void Start()
     {
@@ -36,27 +39,27 @@ public class EnemyMelee : Enemy
             }
         }
     }
-        
 
 
-    
+
+
 
     protected override void Update()
     {
         if (target == null) return;
-                  
+
 
         if (Vector2.Distance(transform.position, target.position) < attackrange)
         {
-            Attack(attackTime);            
+            Attack(attackTime);
         }
-             
+
 
         if (player != null)
         {
             if (player != null)
             {
-                Vector3 direction = player.position - transform.position;  
+                Vector3 direction = player.position - transform.position;
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
@@ -80,7 +83,7 @@ public class EnemyMelee : Enemy
     public override void Attack(float interval)
     {
         // attack rate
-        if(timer <= interval)
+        if (timer <= interval)
         {
             timer += Time.deltaTime;
         }
@@ -91,4 +94,5 @@ public class EnemyMelee : Enemy
         }
 
     }
+    
 }

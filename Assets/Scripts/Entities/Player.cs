@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.Design.Serialization;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,10 @@ public class Player : PlayableObject
     [SerializeField] private Bullet bulletPrefab;
 
 
+    [SerializeField] ParticleSystem onDeathExplosion;
+
+    private ParticleSystem explosionInstance;
+
     public Action<float, float> OnHealthSet;
     public Action<float> OnHealthUpdate;
 
@@ -26,11 +31,13 @@ public class Player : PlayableObject
 
     private void Awake()
     {
+        //onDeathExplosion.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         cam = Camera.main;
     }
 
     private void Start()
     {
+
         health = new Health(100, 0.5f, 50);
         OnHealthSet?.Invoke(health.GetMaxHealth(), health.GetCurrentHealth());
 
@@ -46,8 +53,13 @@ public class Player : PlayableObject
 
     public override void Die()
     {
+
         Debug.Log("Player Died!");
+
+        //onDeathExplosion.Play();
+        spawnParticles();
         OnDeath?.Invoke();
+      
         Destroy(gameObject);
     }
 
@@ -67,13 +79,16 @@ public class Player : PlayableObject
 
     public override void Shoot()
     {
+        
         weapon.Shoot(bulletPrefab, "Enemy", this);
     }
 
     public override void GetDamage(float damage)
     {
+        
         base.GetDamage(damage);
         Debug.Log("Player took " + damage + " Damage! " + health.GetCurrentHealth());
+
         OnHealthUpdate?.Invoke(health.GetCurrentHealth());
     }
 
@@ -81,6 +96,7 @@ public class Player : PlayableObject
     private void Update()
     {
         health.RegenHealth();
+
         OnHealthUpdate?.Invoke(health.GetCurrentHealth());
     }
 
@@ -99,11 +115,16 @@ public class Player : PlayableObject
             new Vector2(-1, -1).normalized
         };
 
-        foreach(Vector2 dir in direction)
+        foreach (Vector2 dir in direction)
         {
             Quaternion rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg);
             weapon.Shoot(bulletPrefab, "Enemy", this, rotation);
         }
+    }
+    
+    private void spawnParticles()
+    {
+        explosionInstance = Instantiate(onDeathExplosion, transform.position, quaternion.identity);
     }
 }
 

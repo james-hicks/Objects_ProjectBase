@@ -128,6 +128,7 @@ MonoBehaviour:
   attackTime: 0
   destroyDistance: 10
   player: {fileID: 0}
+  deathExplosion: {fileID: 5750903418485256912, guid: 8c681b15e483cf64bbf8a6617c213ece, type: 3}
   smokescreenPrefab: {fileID: 3702923198162442071, guid: 30482cbed33fc564fbb2d64ad84c2611, type: 3}
   smokescreenDuration: 6
   smokescreenOffset: {x: 0, y: 0, z: 0}

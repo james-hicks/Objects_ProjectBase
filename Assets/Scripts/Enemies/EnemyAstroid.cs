@@ -14,6 +14,8 @@ public class EnemyAstroid : Enemy
     protected Vector3 moveDirection;
     protected bool hasCalculatedDirection = false;
 
+    
+
     protected override void Start()
     {
         base.Start();
@@ -33,6 +35,7 @@ public class EnemyAstroid : Enemy
         }
         else
         {
+            
             Die();
             return;
         }
@@ -56,6 +59,7 @@ public class EnemyAstroid : Enemy
         if (Vector2.Distance(transform.position, target.position) < attackrange)
         {
             Attack(attackTime);
+            
             Die();
         }
 
@@ -65,6 +69,7 @@ public class EnemyAstroid : Enemy
             float distance = Vector3.Distance(transform.position, target.position);
             if (distance > destroyDistance)
             {
+                
                 Die();
             }
         }

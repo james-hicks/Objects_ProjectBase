@@ -50,6 +50,7 @@ MonoBehaviour:
   enemyType: 0
   speed: 2
   ScoreValue: 200
+  onDeathExplosion: {fileID: -2424327636094117692, guid: 3cd72f8d121993444b74aa12d9585bf5, type: 3}
   player: {fileID: 0}
   attackrange: 1
   attackTime: 1
