@@ -250,6 +250,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8103599417134978536, guid: 2a76ac778361ed149b570b2b5e75630b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -70.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -636,7 +640,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000061035156}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &198662204
@@ -847,7 +851,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 282.90808, y: -44.776062}
+  m_AnchoredPosition: {x: 282.9082, y: -44.776123}
   m_SizeDelta: {x: 509.6969, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &298091209
@@ -1451,9 +1455,15 @@ MonoBehaviour:
   rapidFireIndicator: {fileID: 922650012}
   rapidFireDurationBar: {fileID: 922650014}
   rapidFireTimeText: {fileID: 2019385155}
+<<<<<<< HEAD
   scatterShotIndicator: {fileID: 0}
   scatterShotDurationBar: {fileID: 0}
   scatterShotTimeText: {fileID: 0}
+=======
+  scatterShotIndicator: {fileID: 922650012}
+  scatterShotDurationBar: {fileID: 922650014}
+  scatterShotTimeText: {fileID: 2019385155}
+>>>>>>> 8869124 (removed scatter shot from the gameplay scene and added to pickupSpawner)
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
