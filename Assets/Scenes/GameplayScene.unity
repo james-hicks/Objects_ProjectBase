@@ -3632,6 +3632,8 @@ MonoBehaviour:
     spawnWeight: 1
   - pickup: {fileID: -3506674817183583546, guid: fd36e96fcf7fd9f448e8a8479cf89aee, type: 3}
     spawnWeight: 1
+  - pickup: {fileID: 7655594840356300392, guid: 21213e14ce2f24c45bb6ca0ea949a5e9, type: 3}
+    spawnWeight: 1
   pickupProbability: 0.5
 --- !u!1 &1941979637
 GameObject:
