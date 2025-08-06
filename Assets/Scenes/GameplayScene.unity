@@ -1455,19 +1455,10 @@ MonoBehaviour:
   rapidFireIndicator: {fileID: 922650012}
   rapidFireDurationBar: {fileID: 922650014}
   rapidFireTimeText: {fileID: 2019385155}
-<<<<<<< HEAD
-  scatterShotIndicator: {fileID: 0}
-  scatterShotDurationBar: {fileID: 0}
-  scatterShotTimeText: {fileID: 0}
-=======
   scatterShotIndicator: {fileID: 922650012}
   scatterShotDurationBar: {fileID: 922650014}
   scatterShotTimeText: {fileID: 2019385155}
-<<<<<<< HEAD
->>>>>>> 8869124 (removed scatter shot from the gameplay scene and added to pickupSpawner)
-=======
   shieldPrefab: {fileID: 5175814491835966377, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
->>>>>>> a0e1ef3 (created shield prefab and set pickup trigger. work in progress)
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
