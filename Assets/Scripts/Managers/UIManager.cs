@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -206,5 +207,10 @@ public class UIManager : MonoBehaviour
     {
         MenuScreen.SetActive(true);
         GameOverScreen.SetActive(false);
+    }
+
+    public void StartShieldIndicator(float duration)
+    {
+        
     }
 }
