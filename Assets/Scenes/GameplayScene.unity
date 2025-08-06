@@ -1463,7 +1463,11 @@ MonoBehaviour:
   scatterShotIndicator: {fileID: 922650012}
   scatterShotDurationBar: {fileID: 922650014}
   scatterShotTimeText: {fileID: 2019385155}
+<<<<<<< HEAD
 >>>>>>> 8869124 (removed scatter shot from the gameplay scene and added to pickupSpawner)
+=======
+  shieldPrefab: {fileID: 5175814491835966377, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+>>>>>>> a0e1ef3 (created shield prefab and set pickup trigger. work in progress)
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3388,6 +3392,63 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1001 &1653100848
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1799229203177679544, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799229203177679544, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799229203177679544, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799229203177679544, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799229203177679544, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799229203177679544, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799229203177679544, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799229203177679544, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799229203177679544, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1799229203177679544, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5175814491835966377, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
+      propertyPath: m_Name
+      value: ShieldPickup
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b4a4f8e3e54bf34488a645f158d59aa2, type: 3}
 --- !u!1001 &1761108370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4049,3 +4110,4 @@ SceneRoots:
   - {fileID: 517448761}
   - {fileID: 1940415844}
   - {fileID: 846712576}
+  - {fileID: 1653100848}

@@ -88,6 +88,15 @@ public class Player : PlayableObject
 
     public override void GetDamage(float damage)
     {
+<<<<<<< HEAD
+=======
+        PlayerInput input = FindAnyObjectByType<PlayerInput>();
+        if (input.shieldActive)
+        {
+            base.GetDamage(damage);
+            Debug.Log($"Player:79 - Shield actived. Player damage set to {damage}.");
+        }
+>>>>>>> a0e1ef3 (created shield prefab and set pickup trigger. work in progress)
         
         base.GetDamage(damage);
         Debug.Log("Player took " + damage + " Damage! " + health.GetCurrentHealth());

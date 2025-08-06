@@ -35,6 +35,12 @@ public class UIManager : MonoBehaviour
     private float scatterShotDuration;
     private float scatterShotStartTime;
 
+    [Header("Shield Indicator")]
+    [SerializeField] private GameObject shieldPrefab;
+    private bool shieldEnabled = false;
+    private float shieldDuration;
+    private float shieldStartTime;
+
     private ScoreManager scoreManager;
 
     private void Start()
@@ -63,6 +69,11 @@ public class UIManager : MonoBehaviour
         {
             UpdateScatterShotIndicator();
         }
+
+        //if (shieldEnabled)
+        //{
+        //    UpdateShieldIndicator();
+        //}
     }
 
     //tracking the ShotBarrage
@@ -160,6 +171,37 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void StartShieldIndicator(float duration)
+    {
+        shieldEnabled = true;
+        shieldStartTime = Time.time;
+        shieldDuration = duration;
+
+        if (shieldPrefab != null)
+        {
+            var shield = Instantiate(shieldPrefab, player.transform);
+            shield.GetComponent<CircleCollider2D>().isTrigger = false;    
+        }
+            
+    }
+
+    //public void StopShieldIndicator()
+    //{
+    //    shieldEnabled = false;
+    //    if (shieldIndicator != null)
+    //        shieldIndicator.SetActive(false);
+    //}
+
+    //public void UpdateShieldIndicator()
+    //{
+    //    float timeRemaining = shieldDuration - (Time.time - shieldStartTime);
+    //    if (timeRemaining <= 0)
+    //    {
+    //        StopShieldIndicator();
+    //        return;
+    //    }
+    //}
+
     public void SetHealthBar(float maxHealth, float currentHealth)
     {
         healthBar.maxValue = maxHealth;
@@ -207,10 +249,5 @@ public class UIManager : MonoBehaviour
     {
         MenuScreen.SetActive(true);
         GameOverScreen.SetActive(false);
-    }
-
-    public void StartShieldIndicator(float duration)
-    {
-        
     }
 }
