@@ -83,7 +83,7 @@ public class Enemy : PlayableObject
 
     public override void Die()
     {
-        spawnParticles();
+       // spawnParticles();
         GameManager.GetInstance().scoreManager.IncrementScore(ScoreValue);
         GameManager.GetInstance().NotifyDeath(this);
         Destroy(gameObject);

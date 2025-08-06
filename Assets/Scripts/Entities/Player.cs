@@ -8,6 +8,7 @@ public class Player : PlayableObject
 {
     [SerializeField] private Camera cam;
     [SerializeField] public float speed;
+    [SerializeField] public float speedMulti = 1;
 
     [Header("Default Weapon Info")]
     [SerializeField] private float weaponDamage = 1f;
@@ -66,7 +67,7 @@ public class Player : PlayableObject
     public override void Move(Vector2 direction, Vector2 target)
     {
         // Move the player in the direction they need to move, based on their speed
-        rb.linearVelocity = direction * speed * Time.deltaTime;
+        rb.linearVelocity = direction * speed * speedMulti * Time.deltaTime;
 
         // Get the players position relative to the center of the camera, aka cam.worldToScreenPoint
         var playerScreenPos = cam.WorldToScreenPoint(transform.position);
@@ -75,6 +76,8 @@ public class Player : PlayableObject
 
         float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        
     }
 
     public override void Shoot()
@@ -121,7 +124,7 @@ public class Player : PlayableObject
             weapon.Shoot(bulletPrefab, "Enemy", this, rotation);
         }
     }
-    
+
     private void spawnParticles()
     {
         explosionInstance = Instantiate(onDeathExplosion, transform.position, quaternion.identity);

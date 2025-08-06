@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
 
     private Player player;
 
+    public string targetTag = "Effects";
+    
+
     private bool isEnemySpawning = true;
 
     public ScoreManager scoreManager;
@@ -144,6 +147,18 @@ public class GameManager : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
+
+
+
+        GameObject[] gameObjectsToDestroy = GameObject.FindGameObjectsWithTag("Effects");
+
+        foreach (GameObject go in gameObjectsToDestroy)
+        {
+            Destroy(go);
+        }
+        
+
+
 
         OnGameOver?.Invoke();
     }

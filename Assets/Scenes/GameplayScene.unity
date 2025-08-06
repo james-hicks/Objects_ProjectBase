@@ -3741,10 +3741,8 @@ MonoBehaviour:
   pickupSpawner: {fileID: 1940415845}
   playerPrefab: {fileID: 4467654723593208974, guid: dd1530e3b04742e40859eb180b3d9b3d, type: 3}
   enemies:
-  - {fileID: 866974179382765526, guid: e3178f785ff11fa478751542ce6a688c, type: 3}
-  - {fileID: 882221697611725378, guid: 702710711f0bc7445b0bda0ca9407c64, type: 3}
-  - {fileID: 2810936912735487427, guid: 1ab5e070449c868409e64dd3ddafc7a8, type: 3}
-  - {fileID: 5135907506640146275, guid: d25abfa783f80624d983982d6fdbb0c3, type: 3}
+  - {fileID: 9104219496184246683, guid: a75eaed65a5a0be4a8729dee1e5ce825, type: 3}
+  targetTag: Effects
   scoreManager: {fileID: 1952982135}
   GameOver: 0
 --- !u!114 &1952982135

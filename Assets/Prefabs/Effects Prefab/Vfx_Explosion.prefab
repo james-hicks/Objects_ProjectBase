@@ -19577,7 +19577,7 @@ GameObject:
   - component: {fileID: 6604220082181366252}
   m_Layer: 0
   m_Name: Vfx_Explosion
-  m_TagString: Untagged
+  m_TagString: Effects
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

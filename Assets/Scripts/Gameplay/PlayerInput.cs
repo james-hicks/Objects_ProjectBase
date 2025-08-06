@@ -83,7 +83,7 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetMouseButtonDown(1) && pickupShot != null)
         {
 
-        }
+        }       
 
         // Check if rapid fire ended
         if (rapidFireActive && Time.time >= rapidFireEndTime)
@@ -178,6 +178,7 @@ public class PlayerInput : MonoBehaviour
         Debug.Log($"Rapid Fire activated for {duration} seconds!");
     }
 
+    
     //activate the scatter shoot
     public void ActivateScatterShot(float duration)
     {
@@ -190,4 +191,7 @@ public class PlayerInput : MonoBehaviour
             uiManager.StartScatterShotIndicator(duration);
         }
     }
+
+
+
 }

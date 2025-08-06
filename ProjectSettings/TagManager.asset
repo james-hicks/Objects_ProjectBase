@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - Nuke
+  - Effects
+  - Bullets
   layers:
   - Default
   - TransparentFX
