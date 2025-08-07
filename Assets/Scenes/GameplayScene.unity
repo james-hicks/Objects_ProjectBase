@@ -6184,15 +6184,8 @@ MonoBehaviour:
   pickupSpawner: {fileID: 1940415845}
   playerPrefab: {fileID: 354190321523560944, guid: e875670101ee7f74b9ff7d45a1bc0324, type: 3}
   enemies:
-<<<<<<< HEAD
   - {fileID: 9104219496184246683, guid: a75eaed65a5a0be4a8729dee1e5ce825, type: 3}
   targetTag: Effects
-=======
-  - {fileID: 866974179382765526, guid: e3178f785ff11fa478751542ce6a688c, type: 3}
-  - {fileID: 866974179382765526, guid: e3178f785ff11fa478751542ce6a688c, type: 3}
-  - {fileID: 2810936912735487427, guid: 1ab5e070449c868409e64dd3ddafc7a8, type: 3}
-  - {fileID: 5135907506640146275, guid: d25abfa783f80624d983982d6fdbb0c3, type: 3}
->>>>>>> 42f78d7 (Updated player to have fire trail and made changes to enemies to have a different trail to show better visualization of player objects and enemy objects)
   scoreManager: {fileID: 1952982135}
   GameOver: 0
 --- !u!114 &1952982135

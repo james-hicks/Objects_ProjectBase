@@ -210,12 +210,12 @@ MonoBehaviour:
   enemyType: 0
   speed: 3
   ScoreValue: 100
-  onDeathExplosion: {fileID: -2424327636094117692, guid: 3cd72f8d121993444b74aa12d9585bf5, type: 3}
   meleeDamage: 10
   attackrange: 1
   attackTime: 0
   destroyDistance: 20
   player: {fileID: 0}
+  deathExplosion: {fileID: -2424327636094117692, guid: 3cd72f8d121993444b74aa12d9585bf5, type: 3}
   smokescreenPrefab: {fileID: 2952270961150500529, guid: 6fdf490774ce50942aca062e59c11eb7, type: 3}
   smokescreenDuration: 6
   smokescreenOffset: {x: 0, y: 0, z: 0}

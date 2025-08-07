@@ -97,7 +97,6 @@ public class Enemy : PlayableObject
     private void spawnParticles()
     {
         explosionInstance = Instantiate(onDeathExplosion, transform.position, quaternion.identity);
-        Destroy(explosionInstance.gameObject, 3f);
     }
 
 
