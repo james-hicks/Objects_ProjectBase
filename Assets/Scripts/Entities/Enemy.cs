@@ -83,7 +83,7 @@ public class Enemy : PlayableObject
 
     public override void Die()
     {
-       // spawnParticles();
+       spawnParticles();
         GameManager.GetInstance().scoreManager.IncrementScore(ScoreValue);
         GameManager.GetInstance().NotifyDeath(this);
         Destroy(gameObject);
@@ -97,6 +97,7 @@ public class Enemy : PlayableObject
     private void spawnParticles()
     {
         explosionInstance = Instantiate(onDeathExplosion, transform.position, quaternion.identity);
+        Destroy(explosionInstance.gameObject, 3f);
     }
 
 
