@@ -28,14 +28,18 @@ public class PlayerInput : MonoBehaviour
     [Header("Scatter Shot Pickup Info")]
     private bool scatterShotActive = false;
     private float scatterShotDuration = 0f;
-    
+
+    [Header("Multi-Bullet Pickup Info")]
+    private bool multiBulletActive = false;
+    private float multiBulletEndTime = 0f;
+    private int multiBulletStacks = 0;
+    private const int maxMultiBulletStacks = 5;
 
     void Start()
     {
         player = GetComponent<Player>();
 
         pickupShot = GetComponent<PickupShot>();
-
 
         // Auto-find the counter text if not assigned
         if (counterText == null)
@@ -83,7 +87,7 @@ public class PlayerInput : MonoBehaviour
         else if (Input.GetMouseButtonDown(1) && pickupShot != null)
         {
 
-        }       
+        }
 
         // Check if rapid fire ended
         if (rapidFireActive && Time.time >= rapidFireEndTime)
@@ -97,7 +101,7 @@ public class PlayerInput : MonoBehaviour
                 uiManager.StopRapidFireIndicator();
             }
 
-            Debug.Log("$Rapid Fire ended!");
+            Debug.Log("Rapid Fire ended!");
         }
 
         //scatter shot pick up
@@ -109,6 +113,22 @@ public class PlayerInput : MonoBehaviour
             {
                 scatterShotActive = false;
             }
+        }
+
+        // Check if multi-bullet ended
+        if (multiBulletActive && Time.time >= multiBulletEndTime)
+        {
+            multiBulletActive = false;
+            multiBulletStacks = 0;
+
+            // Notify UIManager to stop indicator
+            UIManager uiManager = FindFirstObjectByType<UIManager>();
+            if (uiManager != null)
+            {
+                uiManager.StopMultiBulletIndicator();
+            }
+
+            Debug.Log("Multi-Bullet ended!");
         }
     }
 
@@ -134,6 +154,7 @@ public class PlayerInput : MonoBehaviour
             }
         }
     }
+
     private void UpdateCounterDisplay()
     {
         if (counterText != null)
@@ -148,19 +169,17 @@ public class PlayerInput : MonoBehaviour
         {
             nukeCounter -= 1;
             explosionInstance = Instantiate(nukeExplosion, transform.position, quaternion.identity);
-            
+
             PickupNuke.DestroyAllEnemies();
             UpdateCounterDisplay();
 
             Debug.Log($"Nuke used! Remaining: {nukeCounter}");
-
         }
         else
         {
             Debug.Log($"No nukes available to use!");
         }
     }
-
 
     public void ActivateRapidFire(float duration, float fireRate)
     {
@@ -178,7 +197,6 @@ public class PlayerInput : MonoBehaviour
         Debug.Log($"Rapid Fire activated for {duration} seconds!");
     }
 
-    
     //activate the scatter shoot
     public void ActivateScatterShot(float duration)
     {
@@ -192,6 +210,53 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    // FIXED: Added UIManager call for multi-bullet
+    public void ActivateMultiBullet(float duration, int maxStacks)
+    {
+        if (multiBulletStacks < maxStacks)
+        {
+            multiBulletStacks++;
+            multiBulletActive = true;
+            multiBulletEndTime = Time.time + duration;
 
+            // Call UIManager to show the indicator
+            UIManager uiManager = FindFirstObjectByType<UIManager>();
+            if (uiManager != null)
+            {
+                uiManager.StartMultiBulletIndicator(duration, multiBulletStacks, maxStacks);
+                Debug.Log($"UIManager.StartMultiBulletIndicator called with {multiBulletStacks}/{maxStacks}");
+            }
+            else
+            {
+                Debug.LogError("UIManager not found!");
+            }
 
+            Debug.Log($"Multi-Bullet activated! Stacks: {multiBulletStacks}/{maxStacks}");
+        }
+        else
+        {
+            // Extend duration if at max stacks
+            multiBulletEndTime = Time.time + duration;
+
+            // Update the UI even at max stacks
+            UIManager uiManager = FindFirstObjectByType<UIManager>();
+            if (uiManager != null)
+            {
+                uiManager.StartMultiBulletIndicator(duration, multiBulletStacks, maxStacks);
+            }
+
+            Debug.Log("Multi-Bullet at max stacks! Duration extended.");
+        }
+    }
+
+    // Getter methods for multi-bullet info
+    public bool IsMultiBulletActive()
+    {
+        return multiBulletActive;
+    }
+
+    public int GetMultiBulletStacks()
+    {
+        return multiBulletStacks;
+    }
 }

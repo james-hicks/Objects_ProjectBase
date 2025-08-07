@@ -19,9 +19,9 @@ public class UIManager : MonoBehaviour
 
 
     [Header("Rapid Fire Indicator")]
-    [SerializeField] private GameObject rapidFireIndicator;     
-    [SerializeField] private Slider rapidFireDurationBar;       
-    [SerializeField] private TextMeshProUGUI rapidFireTimeText; 
+    [SerializeField] private GameObject rapidFireIndicator;
+    [SerializeField] private Slider rapidFireDurationBar;
+    [SerializeField] private TextMeshProUGUI rapidFireTimeText;
 
     private bool isTrackingRapidFire = false;
     private float rapidFireStartTime;
@@ -41,6 +41,16 @@ public class UIManager : MonoBehaviour
     private float shieldDuration;
     private float shieldStartTime;
 
+    [Header("Multi-Bullet UI")]
+    [SerializeField] private GameObject multiBulletIndicator;
+    [SerializeField] private Slider multiBulletSlider;
+    [SerializeField] private TMP_Text multiBulletStackText;
+
+
+    private bool isTrackingMultiBullet = false;
+    private float multiBulletStartTime;
+    private float multiBulletDuration;
+
     private ScoreManager scoreManager;
 
     private void Start()
@@ -52,9 +62,17 @@ public class UIManager : MonoBehaviour
         GameManager.GetInstance().OnGameStart += GameStarted;
         GameManager.GetInstance().OnGameOver += GameOver;
 
-        // Hide rapid fire indicator initially
+        // Hide indicator initially
         if (rapidFireIndicator != null)
             rapidFireIndicator.SetActive(false);
+       
+        if (multiBulletIndicator != null)
+            multiBulletIndicator.SetActive(false);
+
+        if (scatterShotIndicator != null)
+            scatterShotIndicator.SetActive(false);
+
+       
     }
 
     public void Update()
@@ -68,6 +86,11 @@ public class UIManager : MonoBehaviour
         if (scatterShotEnabled)
         {
             UpdateScatterShotIndicator();
+        }
+
+        if (isTrackingMultiBullet)
+        {
+            UpdateMultiBulletIndicator();
         }
 
         //if (shieldEnabled)
@@ -180,9 +203,9 @@ public class UIManager : MonoBehaviour
         if (shieldPrefab != null)
         {
             var shield = Instantiate(shieldPrefab, player.transform);
-            shield.GetComponent<CircleCollider2D>().isTrigger = false;    
+            shield.GetComponent<CircleCollider2D>().isTrigger = false;
         }
-            
+
     }
 
     //public void StopShieldIndicator()
@@ -250,4 +273,60 @@ public class UIManager : MonoBehaviour
         MenuScreen.SetActive(true);
         GameOverScreen.SetActive(false);
     }
+
+    public void StartMultiBulletIndicator(float duration, int currentStacks, int maxStacks)
+    {
+        isTrackingMultiBullet = true;
+        multiBulletStartTime = Time.time;
+        multiBulletDuration = duration;
+
+        if (multiBulletIndicator != null)
+            multiBulletIndicator.SetActive(true);
+
+        if (multiBulletSlider != null)
+        {
+            multiBulletSlider.maxValue = duration;
+            multiBulletSlider.value = duration;
+        }
+
+        if (multiBulletStackText != null)
+        {
+            multiBulletStackText.text = $"Multi-Shot: {currentStacks}/{maxStacks}";
+        }
+    }
+
+    public void StopMultiBulletIndicator()
+    {
+        isTrackingMultiBullet = false;
+
+        if (multiBulletIndicator != null)
+            multiBulletIndicator.SetActive(false);
+    }
+
+    private void UpdateMultiBulletIndicator()
+    {
+        float timeRemaining = multiBulletDuration - (Time.time - multiBulletStartTime);
+
+        if (timeRemaining <= 0)
+        {
+            StopMultiBulletIndicator();
+            return;
+        }
+
+        if (multiBulletSlider != null)
+        {
+            multiBulletSlider.value = timeRemaining;
+        }
+
+        if (multiBulletStackText != null)
+        {
+            PlayerInput playerInput = FindFirstObjectByType<PlayerInput>();
+            if (playerInput != null)
+            {
+                int currentStacks = playerInput.GetMultiBulletStacks();
+                multiBulletStackText.text = $"Multi-Shot: {currentStacks}/5 ({timeRemaining:F1}s)";
+            }
+        }
+    }
+
 }

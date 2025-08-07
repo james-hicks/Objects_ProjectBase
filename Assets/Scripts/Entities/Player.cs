@@ -19,6 +19,7 @@ public class Player : PlayableObject
     [SerializeField] ParticleSystem onDeathExplosion;
 
     private ParticleSystem explosionInstance;
+    private Vector3 lastValidPosition;
 
     public Action<float, float> OnHealthSet;
     public Action<float> OnHealthUpdate;
@@ -45,6 +46,7 @@ public class Player : PlayableObject
         rb = GetComponent<Rigidbody2D>();
 
         weapon = new Weapon("PlayerWeapon", weaponDamage, bulletSpeed);
+        lastValidPosition = transform.position;
     }
 
     public override void Attack(float interval)
@@ -60,7 +62,7 @@ public class Player : PlayableObject
         //onDeathExplosion.Play();
         spawnParticles();
         OnDeath?.Invoke();
-      
+
         Destroy(gameObject);
     }
 
@@ -77,13 +79,23 @@ public class Player : PlayableObject
         float angle = Mathf.Atan2(target.y, target.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        
+
     }
 
     public override void Shoot()
     {
-        
-        weapon.Shoot(bulletPrefab, "Enemy", this);
+        PlayerInput playerInput = GetComponent<PlayerInput>();
+
+        if (playerInput != null && playerInput.IsMultiBulletActive())
+        {
+            // Multi-bullet shooting with angled bullets
+            MultiBulletShoot(playerInput.GetMultiBulletStacks());
+        }
+        else
+        {
+            // Normal single bullet
+            weapon.Shoot(bulletPrefab, "Enemy", this);
+        }
     }
 
     public override void GetDamage(float damage)
@@ -94,7 +106,7 @@ public class Player : PlayableObject
         //    base.GetDamage(damage);
         //    Debug.Log($"Player:79 - Shield actived. Player damage set to {damage}.");
         //}
-        
+
         base.GetDamage(damage);
         Debug.Log("Player took " + damage + " Damage! " + health.GetCurrentHealth());
 
@@ -107,6 +119,8 @@ public class Player : PlayableObject
         health.RegenHealth();
 
         OnHealthUpdate?.Invoke(health.GetCurrentHealth());
+
+        lastValidPosition = transform.position;
     }
 
     //scatter shoot method to shoot in 8 directions
@@ -136,5 +150,37 @@ public class Player : PlayableObject
         explosionInstance = Instantiate(onDeathExplosion, transform.position, quaternion.identity);
         Destroy(explosionInstance.gameObject, 3f);
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.name == "Map Boundry")
+        {
+            // Player is leaving the map area
+            rb.linearVelocity = Vector2.zero;
+            transform.position = lastValidPosition;
+            Debug.Log("Player returned to boundary");
+        }
+    }
+    private void MultiBulletShoot(int bulletCount)
+    {
+        // Shoot the main bullet first
+        weapon.Shoot(bulletPrefab, "Enemy", this);
+
+        // Shoot additional bullets with clear angle separation
+        float baseAngle = 20f; // Base angle separation
+
+        for (int i = 1; i <= bulletCount; i++)
+        {
+            // Alternate between positive and negative angles
+            float angle = (i % 2 == 1) ? baseAngle * ((i + 1) / 2) : -baseAngle * (i / 2);
+
+            Quaternion rotation = transform.rotation * Quaternion.Euler(0, 0, angle);
+            weapon.Shoot(bulletPrefab, "Enemy", this, rotation);
+        }
+
+        Debug.Log($"Multi-bullet fired: {bulletCount + 1} bullets total");
+    }
+
+    
 }
 

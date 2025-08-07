@@ -23,10 +23,10 @@ public class Weapon
     }
 
     // scatter shoot weapon to shoot in a given direction
-    public void Shoot(Bullet _bullet, string _targetTag, PlayableObject _object, Quaternion rotation,  float _timeToDie = 5f)
+    public void Shoot(Bullet _bullet, string _targetTag, PlayableObject _object, Quaternion rotation, float _timeToDie = 5)
     {
         Bullet tempBullet = GameObject.Instantiate(_bullet, _object.transform.position, rotation);
-        tempBullet.SetBullet(damage, "Enemy", bulletSpeed);
+        tempBullet.SetBullet(damage, _targetTag, bulletSpeed);
         GameObject.Destroy(tempBullet.gameObject, _timeToDie);
     }
 
