@@ -8,10 +8,10 @@ public class ShieldPickup : Pickup
     {
         Player player = FindFirstObjectByType<Player>();
         PlayerInput playerInput = player.GetComponent<PlayerInput>();
-        if (player != null && playerInput != null)
-        {
-            playerInput.ActivateShield(shieldDuration);
-        }
+        //if (player != null && playerInput != null)
+        //{
+        //    playerInput.ActivateShield(shieldDuration);
+        //}
 
         base.OnPickup();
     }

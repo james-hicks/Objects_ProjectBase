@@ -2,12 +2,17 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Unity.Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Spawning")]
     [SerializeField] private Transform[] spawnPositions;
     [SerializeField] private float spawnRate;
+
+    [Header("Camera")]
+    [SerializeField] private CinemachineCamera cinemachineCamera;
+
 
     [SerializeField] private PickupSpawner pickupSpawner;
 
@@ -53,6 +58,8 @@ public class GameManager : MonoBehaviour
 
         instance = this;
     }
+
+    
 
     private void Update()
     {
@@ -108,8 +115,21 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        
         player = Instantiate(playerPrefab, Vector2.zero, Quaternion.identity).GetComponent<Player>();
         GameOver = false;
+
+        // Find and set the Cinemachine camera to follow the player
+        CinemachineCamera cmCamera = FindFirstObjectByType<CinemachineCamera>();
+        if (cmCamera != null)
+        {
+            cmCamera.Follow = player.transform;
+            Debug.Log("Set Cinemachine camera to follow player");
+        }
+        else
+        {
+            Debug.LogError("No CinemachineCamera found in scene");
+        }
 
         player.OnDeath += StopGame;
 
@@ -129,6 +149,7 @@ public class GameManager : MonoBehaviour
         isEnemySpawning = false;
         scoreManager.SetHighScore();
 
+        
 
         StartCoroutine(GameStopper());
     }

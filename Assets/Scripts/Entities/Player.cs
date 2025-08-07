@@ -89,11 +89,11 @@ public class Player : PlayableObject
     public override void GetDamage(float damage)
     {
         PlayerInput input = FindAnyObjectByType<PlayerInput>();
-        if (input.shieldActive)
-        {
-            base.GetDamage(damage);
-            Debug.Log($"Player:79 - Shield actived. Player damage set to {damage}.");
-        }
+        //if (input.shieldActive)
+        //{
+        //    base.GetDamage(damage);
+        //    Debug.Log($"Player:79 - Shield actived. Player damage set to {damage}.");
+        //}
         
         base.GetDamage(damage);
         Debug.Log("Player took " + damage + " Damage! " + health.GetCurrentHealth());
