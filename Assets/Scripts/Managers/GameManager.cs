@@ -6,38 +6,35 @@ using Unity.Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Spawning")]
-    [SerializeField] private Transform[] spawnPositions;
-    [SerializeField] private float spawnRate;
+    [Header("Dynamic Spawning")]
+    [SerializeField] private int numberOfSpawnPoints = 8;
+    [SerializeField] private float spawnDistance = 15f;
+    [SerializeField] private float spawnRate = 2f;
 
     [Header("Camera")]
     [SerializeField] private CinemachineCamera cinemachineCamera;
 
-
     [SerializeField] private PickupSpawner pickupSpawner;
 
     [Space]
-
     [SerializeField] private GameObject playerPrefab;
 
     [Space]
     [SerializeField] private GameObject[] enemies;
 
     private Player player;
+    private Vector3[] dynamicSpawnPositions;
 
     public string targetTag = "Effects";
-    
 
-    private bool isEnemySpawning = true;
+    private bool isEnemySpawning = false;
+    private Coroutine spawnerCoroutine;
 
     public ScoreManager scoreManager;
-
     public bool GameOver = false;
 
     public Action OnGameStart;
     public Action OnGameOver;
-
-
 
     /// <summary>
     /// Singleton GameManager
@@ -51,49 +48,100 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(gameObject);
+            return;
         }
 
         instance = this;
+        dynamicSpawnPositions = new Vector3[numberOfSpawnPoints];
     }
 
-    
+       
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    CreateEnemy();
-        //}
-
-        if (GameOver & Input.GetKeyDown(KeyCode.Space))
+        if (GameOver && Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+
     }
 
-    private GameObject tempEnemy;
+    private void UpdateDynamicSpawnPositions()
+    {
+        if (player == null) return;
+
+        Vector3 playerPosition = player.transform.position;
+
+        for (int i = 0; i < numberOfSpawnPoints; i++)
+        {
+            float angle = (360f / numberOfSpawnPoints) * i * Mathf.Deg2Rad;
+            Vector3 direction = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0);
+            dynamicSpawnPositions[i] = playerPosition + direction * spawnDistance;
+        }
+    }
 
     private void CreateEnemy()
     {
-        tempEnemy = Instantiate(enemies[UnityEngine.Random.Range(0, enemies.Length)]);
-        tempEnemy.transform.position = spawnPositions[UnityEngine.Random.Range(0, spawnPositions.Length)].position;
+        if (enemies.Length == 0)
+        {            
+            return;
+        }
+
+        if (player == null)
+        {            
+            return;
+        }
+
+        UpdateDynamicSpawnPositions();
+        Vector3 spawnPos = dynamicSpawnPositions[UnityEngine.Random.Range(0, dynamicSpawnPositions.Length)];
+        GameObject enemyPrefab = enemies[UnityEngine.Random.Range(0, enemies.Length)];
+
+        if (enemyPrefab == null)
+        {            
+            return;
+        }
+
+        GameObject tempEnemy = Instantiate(enemyPrefab);
+        tempEnemy.transform.position = spawnPos;
+
     }
 
     private IEnumerator EnemySpawner()
     {
-        while (isEnemySpawning)
+        int spawnCount = 0;
+
+        while (isEnemySpawning && !GameOver && player != null)
         {
-            yield return new WaitForSeconds(1f / spawnRate);
-            CreateEnemy();
+            float waitTime = 1f / spawnRate;            
+
+            yield return new WaitForSeconds(waitTime);
+
+            if (isEnemySpawning && !GameOver && player != null)
+            {                
+                CreateEnemy();
+                spawnCount++;
+            }
+            else
+            {
+              
+                break;
+            }
         }
+
     }
 
     public void DisableSpawning()
-    {
+    {        
         isEnemySpawning = false;
+
+        if (spawnerCoroutine != null)
+        {
+            StopCoroutine(spawnerCoroutine);
+            spawnerCoroutine = null;           
+        }
     }
 
     public void NotifyDeath(Enemy enemy)
@@ -101,64 +149,76 @@ public class GameManager : MonoBehaviour
         pickupSpawner.SpawnPickup(enemy.transform.position);
     }
 
-
-    public void FindPlayer()
-    {
-        try
-        {
-            player = GameObject.FindWithTag("Player").GetComponent<Player>();
-        } catch (NullReferenceException e)
-        {
-            Debug.Log("There is no player in the scene.");
-        }
-    }
-
     public void StartGame()
     {
-        
+        if (playerPrefab == null)
+        {            
+            return;
+        }
+
+        if (enemies.Length == 0)
+        {            
+            return;
+        }
+
+        DisableSpawning();
+
         player = Instantiate(playerPrefab, Vector2.zero, Quaternion.identity).GetComponent<Player>();
         GameOver = false;
 
-        // Find and set the Cinemachine camera to follow the player
+
+        // Set up camera
         CinemachineCamera cmCamera = FindFirstObjectByType<CinemachineCamera>();
         if (cmCamera != null)
         {
             cmCamera.Follow = player.transform;
-            Debug.Log("Set Cinemachine camera to follow player");
         }
-        else
+
+        if (player != null)
         {
-            Debug.LogError("No CinemachineCamera found in scene");
+            player.OnDeath += StopGame;
         }
 
-        player.OnDeath += StopGame;
+        OnGameStart?.Invoke();
 
-        OnGameStart.Invoke();
         StartCoroutine(GameStarter());
     }
 
     IEnumerator GameStarter()
     {
         yield return new WaitForSeconds(2f);
+
+        if (player == null)
+        {            
+            yield break;
+        }
+
+        if (GameOver)
+        {
+            yield break;
+        }
+
         isEnemySpawning = true;
-        StartCoroutine(EnemySpawner());
+
+        spawnerCoroutine = StartCoroutine(EnemySpawner());
+
     }
 
     public void StopGame()
     {
-        isEnemySpawning = false;
-        scoreManager.SetHighScore();
-
-        
-
+        DisableSpawning();
+        if (scoreManager != null)
+        {
+            scoreManager.SetHighScore();
+        }
         StartCoroutine(GameStopper());
     }
 
     IEnumerator GameStopper()
     {
-        isEnemySpawning = false;
         yield return new WaitForSeconds(2f);
         GameOver = true;
+
         foreach (Enemy item in FindObjectsOfType(typeof(Enemy)))
         {
             Destroy(item.gameObject);
@@ -169,21 +229,14 @@ public class GameManager : MonoBehaviour
             Destroy(item.gameObject);
         }
 
-
-
         GameObject[] gameObjectsToDestroy = GameObject.FindGameObjectsWithTag("Effects");
-
         foreach (GameObject go in gameObjectsToDestroy)
         {
             Destroy(go);
         }
-        
-
-
 
         OnGameOver?.Invoke();
     }
-
 
     public Player GetPlayer() { return player; }
 }

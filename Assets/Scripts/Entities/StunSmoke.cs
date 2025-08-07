@@ -2,38 +2,65 @@ using UnityEngine;
 
 public class SmokescreenController : MonoBehaviour
 {
-    public float slowdownPercentage = 0.5f; 
+    public float slowdownPercentage = 0.5f;
     private Player player;
-    private float originalPlayerSpeed = 1f;
-   
     private bool playerInside = false;
+
+    
+    private static int stunAreaCount = 0;
+    private static float originalPlayerSpeed;
+    private static bool isPlayerStunned = false;
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player")) 
+        if (other.gameObject.CompareTag("Player") && !playerInside)
         {
             player = other.GetComponent<Player>();
-            player.speedMulti = .5f;
+            playerInside = true;
 
             if (player != null)
             {
-                originalPlayerSpeed = player.speed;
-                player.speed *= (1 - player.speedMulti);
-                playerInside = true;
+                stunAreaCount++;
+
+               
+                if (stunAreaCount == 1 && !isPlayerStunned)
+                {
+                    originalPlayerSpeed = player.speed;
+                    player.speedMulti = slowdownPercentage;
+                    isPlayerStunned = true;                    
+                }
             }
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player") && playerInside)
+        if (other.gameObject.CompareTag("Player") && playerInside && player != null)
         {
+            playerInside = false;
+            stunAreaCount--;
+
             
-            if (player != null)
+            if (stunAreaCount <= 0 && isPlayerStunned)
             {
                 player.speed = originalPlayerSpeed;
-                player.speed *= (1 + player.speedMulti);
-                playerInside = false;
+                player.speedMulti = 1f;
+                isPlayerStunned = false;
+                stunAreaCount = 0; 
+            }
+        }
+    }
+
+    
+    void OnDestroy()
+    {
+        if (playerInside && player != null)
+        {
+            stunAreaCount--;
+            if (stunAreaCount <= 0)
+            {
+                stunAreaCount = 0;
+                isPlayerStunned = false;
             }
         }
     }
