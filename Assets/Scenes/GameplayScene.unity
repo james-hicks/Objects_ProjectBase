@@ -6697,17 +6697,17 @@ MonoBehaviour:
     spawnWeight: 1
   - pickup: {fileID: 1343894621037833759, guid: 009f299d8df774043bf10dbb9effef3e, type: 3}
     spawnWeight: 2
-<<<<<<< HEAD
+
   - pickup: {fileID: 7655594840356300392, guid: 21213e14ce2f24c45bb6ca0ea949a5e9, type: 3}
     spawnWeight: 5
   - pickup: {fileID: -7452858815853750209, guid: ae23bf9c3b1eb194a9cb411f45a1b886, type: 3}
     spawnWeight: 3
   pickupProbability: 0.5
-=======
+
   - pickup: {fileID: -7452858815853750209, guid: ae23bf9c3b1eb194a9cb411f45a1b886, type: 3}
     spawnWeight: 3
   pickupProbability: 0.4
->>>>>>> 734215f (Updated)
+
 --- !u!1 &1952982132
 GameObject:
   m_ObjectHideFlags: 0
@@ -6756,7 +6756,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cinemachineCamera: {fileID: 0}
   playerPrefab: {fileID: 354190321523560944, guid: e875670101ee7f74b9ff7d45a1bc0324, type: 3}
-<<<<<<< HEAD
+
   enemies:
   - {fileID: 866974179382765526, guid: e3178f785ff11fa478751542ce6a688c, type: 3}
   - {fileID: 5090500115208669787, guid: ac98f58bb36543147b2c913c51297d1d, type: 3}
@@ -6771,10 +6771,9 @@ MonoBehaviour:
   - {fileID: 1475856039516377395, guid: 6b5206b0e66e73349bc98ff7e1a036b5, type: 3}
   targetTag: Effects
   scoreManager: {fileID: 1952982135}
-=======
   enemySpawning: {fileID: 1952982136}
   pickupSpawner: {fileID: 1940415845}
->>>>>>> 734215f (Updated)
+
   GameOver: 0
   scoreManager: {fileID: 1952982135}
 --- !u!114 &1952982135
