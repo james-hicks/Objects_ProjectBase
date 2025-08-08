@@ -69,6 +69,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nukeExplosion: {fileID: 1435647593350552091, guid: 522fb6e16143d234e81e80f99ee84716, type: 3}
   counterText: {fileID: 0}
+  scatterShotFireRate: 0.75
 --- !u!50 &6199689461610889756
 Rigidbody2D:
   serializedVersion: 5

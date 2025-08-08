@@ -28,6 +28,8 @@ public class PlayerInput : MonoBehaviour
     [Header("Scatter Shot Pickup Info")]
     private bool scatterShotActive = false;
     private float scatterShotDuration = 0f;
+    [SerializeField] private float scatterShotFireRate;
+    private float scatterShotCooldown = 0f;
 
     [Header("Multi-Bullet Pickup Info")]
     private bool multiBulletActive = false;
@@ -107,12 +109,18 @@ public class PlayerInput : MonoBehaviour
         //scatter shot pick up
         if (scatterShotActive)
         {
-            player.scatterShoot();
+            
             scatterShotDuration -= Time.deltaTime;
-            if (scatterShotDuration <= 0)
+            scatterShotCooldown -= Time.deltaTime;
+
+            if (scatterShotCooldown <= 0f)
             {
-                scatterShotActive = false;
+                player.scatterShoot();
+                scatterShotCooldown = scatterShotFireRate;
             }
+
+            if (scatterShotDuration <= 0)
+                scatterShotActive = false;
         }
 
         // Check if multi-bullet ended
