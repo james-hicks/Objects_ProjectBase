@@ -8,15 +8,12 @@ public class Enemy : PlayableObject
 
     protected Transform target;
     [SerializeField] protected float speed;
-
-    [Header("Movement Settings")]
-    [SerializeField] protected float rotationSpeed = 5f;
-    [SerializeField] protected bool useRigidbodyMovement = true;
+    
 
     protected Rigidbody2D rb;
 
     public int ScoreValue;
-
+    
     [Header("Particle System on Death")]
     [SerializeField] ParticleSystem onDeathExplosion;
 
@@ -24,6 +21,7 @@ public class Enemy : PlayableObject
 
     protected virtual void Start()
     {
+        //target = GameObject.FindWithTag("Player").transform;
         try
         {
             target = FindFirstObjectByType<Player>().GetComponent<Transform>();
@@ -31,53 +29,25 @@ public class Enemy : PlayableObject
         catch (NullReferenceException e)
         {
             Debug.Log("There is no Alive player in the game, stopping all future spawning." + e);
-
-            EnemySpawning enemySpawning = FindFirstObjectByType<EnemySpawning>();
-            if (enemySpawning != null)
-            {
-                enemySpawning.StopSpawning();
-            }
-
+            GameManager.GetInstance().DisableSpawning();
             Destroy(gameObject);
         }
 
         rb = GetComponent<Rigidbody2D>();
-
-        // Ensure rigidbody is set up properly for 2D movement
-        if (rb != null)
-        {
-            rb.freezeRotation = true; // Prevent physics rotation interference
-            rb.gravityScale = 0; // No gravity for space enemies
-        }
     }
 
     protected virtual void Update()
     {
-        if (target == null) return;
 
-        // Always update rotation to face player
-        RotateTowardsTarget();
     }
 
-    // Separate rotation logic that always runs
-    protected virtual void RotateTowardsTarget()
+    private void FixedUpdate()
     {
         if (target == null) return;
 
-        Vector3 direction = target.position - transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-        // Smooth rotation towards target
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        Move(target.position);
     }
 
-    // This will be overridden by specific enemy types
-    protected virtual void FixedUpdate()
-    {
-        if (target == null) return;
-        // Base movement - override in child classes for specific behavior
-    }
 
     public override void Move(Vector2 direction, Vector2 target) { }
 
@@ -86,52 +56,19 @@ public class Enemy : PlayableObject
         transform.Translate(Vector2.right * spd * Time.deltaTime);
     }
 
-    // Improved movement method
     public override void Move(Vector2 direction)
     {
-        if (rb == null) return;
+        // Difference between our current position and target position
+        direction.x -= transform.position.x;
+        direction.y -= transform.position.y;
 
-        if (useRigidbodyMovement)
-        {
-            // Use Rigidbody for physics-based movement
-            Vector2 targetDirection = direction.normalized;
-            rb.linearVelocity = targetDirection * speed;
-        }
-        else
-        {
-            // Direct transform movement (ignores colliders)
-            transform.position += (Vector3)(direction.normalized * speed * Time.deltaTime);
-        }
-    }
 
-    // Helper method for movement towards target
-    protected virtual void MoveTowardsTarget(float maxDistance = float.MaxValue)
-    {
-        if (target == null || rb == null) return;
+        // Rotate towards target by getting the angle
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
-
-        if (distanceToTarget > maxDistance) return;
-
-        Vector2 direction = (target.position - transform.position).normalized;
-
-        if (useRigidbodyMovement)
-        {
-            rb.linearVelocity = direction * speed;
-        }
-        else
-        {
-            transform.position += (Vector3)(direction * speed * Time.deltaTime);
-        }
-    }
-
-    // Stop movement
-    protected virtual void StopMovement()
-    {
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-        }
+        // Move towards target direction, based on our speed
+        rb.linearVelocity = direction.normalized * speed * Time.deltaTime;
     }
 
     public override void Shoot()
@@ -146,20 +83,9 @@ public class Enemy : PlayableObject
 
     public override void Die()
     {
-        spawnParticles();
-
-        GameManager gameManager = GameManager.GetInstance();
-        if (gameManager != null && gameManager.scoreManager != null)
-        {
-            gameManager.scoreManager.IncrementScore(ScoreValue);
-        }
-
-        EnemySpawning enemySpawning = FindFirstObjectByType<EnemySpawning>();
-        if (enemySpawning != null)
-        {
-            enemySpawning.NotifyEnemyDeath(transform.position);
-        }
-
+       spawnParticles();
+        GameManager.GetInstance().scoreManager.IncrementScore(ScoreValue);
+        GameManager.GetInstance().NotifyDeath(this);
         Destroy(gameObject);
     }
 
@@ -170,10 +96,9 @@ public class Enemy : PlayableObject
 
     private void spawnParticles()
     {
-        if (onDeathExplosion != null)
-        {
-            explosionInstance = Instantiate(onDeathExplosion, transform.position, quaternion.identity);
-            Destroy(explosionInstance.gameObject, 3f);
-        }
+        explosionInstance = Instantiate(onDeathExplosion, transform.position, quaternion.identity);
+        Destroy(explosionInstance.gameObject, 3f);
     }
+
+
 }

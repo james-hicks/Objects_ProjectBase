@@ -27,14 +27,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2810936912735487427}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: -0.00000044703478}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 3.075691, y: 3.075691, z: 3.075691}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9207072961981613484}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7199503349022751887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,14 +49,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 0
   speed: 2
-  rotationSpeed: 5
-  useRigidbodyMovement: 1
   ScoreValue: 200
   onDeathExplosion: {fileID: -2424327636094117692, guid: 3cd72f8d121993444b74aa12d9585bf5, type: 3}
-  attackRange: 2
+  player: {fileID: 0}
+  attackrange: 1
   attackTime: 1
-  meleeDamage: 10
-  blastRadius: 5
+  meleeDamage: 40
+  rotationSpeed: 5
+  attackRate: 0
+  moveSpeed: 5
+  playerPrefab: {fileID: 0}
+  blastRadious: 0
 --- !u!61 &9031260690688854559
 BoxCollider2D:
   m_ObjectHideFlags: 0
