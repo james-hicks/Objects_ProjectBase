@@ -2978,7 +2978,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000d1e2f404
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -6697,11 +6697,17 @@ MonoBehaviour:
     spawnWeight: 1
   - pickup: {fileID: 1343894621037833759, guid: 009f299d8df774043bf10dbb9effef3e, type: 3}
     spawnWeight: 2
+<<<<<<< HEAD
   - pickup: {fileID: 7655594840356300392, guid: 21213e14ce2f24c45bb6ca0ea949a5e9, type: 3}
     spawnWeight: 5
   - pickup: {fileID: -7452858815853750209, guid: ae23bf9c3b1eb194a9cb411f45a1b886, type: 3}
     spawnWeight: 3
   pickupProbability: 0.5
+=======
+  - pickup: {fileID: -7452858815853750209, guid: ae23bf9c3b1eb194a9cb411f45a1b886, type: 3}
+    spawnWeight: 3
+  pickupProbability: 0.4
+>>>>>>> 734215f (Updated)
 --- !u!1 &1952982132
 GameObject:
   m_ObjectHideFlags: 0
@@ -6748,12 +6754,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ae52f372a9a3e40850289956688284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfSpawnPoints: 8
-  spawnDistance: 15
-  spawnRate: 1
   cinemachineCamera: {fileID: 0}
-  pickupSpawner: {fileID: 1940415845}
   playerPrefab: {fileID: 354190321523560944, guid: e875670101ee7f74b9ff7d45a1bc0324, type: 3}
+<<<<<<< HEAD
   enemies:
   - {fileID: 866974179382765526, guid: e3178f785ff11fa478751542ce6a688c, type: 3}
   - {fileID: 5090500115208669787, guid: ac98f58bb36543147b2c913c51297d1d, type: 3}
@@ -6768,7 +6771,12 @@ MonoBehaviour:
   - {fileID: 1475856039516377395, guid: 6b5206b0e66e73349bc98ff7e1a036b5, type: 3}
   targetTag: Effects
   scoreManager: {fileID: 1952982135}
+=======
+  enemySpawning: {fileID: 1952982136}
+  pickupSpawner: {fileID: 1940415845}
+>>>>>>> 734215f (Updated)
   GameOver: 0
+  scoreManager: {fileID: 1952982135}
 --- !u!114 &1952982135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6824,11 +6832,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfSpawnPoints: 8
-  spawnRadius: 10
   spawnDistance: 15
+  spawnRate: 1
   updateInterval: 0.5
-  spawnRate: 2
+  enemySpawnData:
+  - enemyPrefab: {fileID: 866974179382765526, guid: e3178f785ff11fa478751542ce6a688c, type: 3}
+    spawnWeight: 50
+    rarity: Commen
+  - enemyPrefab: {fileID: 5090500115208669787, guid: ac98f58bb36543147b2c913c51297d1d, type: 3}
+    spawnWeight: 20
+    rarity: Rare
+  - enemyPrefab: {fileID: 2200947158520324694, guid: 93dec8720109e9541895030339c3e0cf, type: 3}
+    spawnWeight: 35
+    rarity: Uncommen
+  - enemyPrefab: {fileID: 9104219496184246683, guid: a75eaed65a5a0be4a8729dee1e5ce825, type: 3}
+    spawnWeight: 20
+    rarity: Rare
+  - enemyPrefab: {fileID: 9104219496184246683, guid: a75eaed65a5a0be4a8729dee1e5ce825, type: 3}
+    spawnWeight: 20
+    rarity: Rare
+  - enemyPrefab: {fileID: 5135907506640146275, guid: d25abfa783f80624d983982d6fdbb0c3, type: 3}
+    spawnWeight: 50
+    rarity: commen
+  - enemyPrefab: {fileID: 2810936912735487427, guid: 1ab5e070449c868409e64dd3ddafc7a8, type: 3}
+    spawnWeight: 50
+    rarity: Rare
+  - enemyPrefab: {fileID: 5039530807257563592, guid: d2f8fc68147525445874ed1739ca1d54, type: 3}
+    spawnWeight: 50
+    rarity: Commen
+  - enemyPrefab: {fileID: 4641916873913941046, guid: 74ad6d7cf20ae454f8ad7a90fd03736e, type: 3}
+    spawnWeight: 30
+    rarity: Uncommen
+  - enemyPrefab: {fileID: 1475856039516377395, guid: 6b5206b0e66e73349bc98ff7e1a036b5, type: 3}
+    spawnWeight: 30
+    rarity: Uncommen
+  - enemyPrefab: {fileID: 5158369884233603834, guid: 63252613c49fc754f8a19ae1984e6968, type: 3}
+    spawnWeight: 20
+    rarity: rare
+  - enemyPrefab: {fileID: 882221697611725378, guid: 702710711f0bc7445b0bda0ca9407c64, type: 3}
+    spawnWeight: 5
+    rarity: Legendary
   enemies: []
+  pickupSpawner: {fileID: 0}
 --- !u!1 &2008211094
 GameObject:
   m_ObjectHideFlags: 0
