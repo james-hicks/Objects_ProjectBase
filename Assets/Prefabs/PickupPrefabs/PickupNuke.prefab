@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.7601, y: 1.7601, z: 1.7601}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2855112185723725522}
@@ -111,7 +111,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614cd40eefba06b47b684cf48ad6709a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nukeExplosion: {fileID: 1435647593350552091, guid: 522fb6e16143d234e81e80f99ee84716, type: 3}
 --- !u!1 &3085320523567359590
 GameObject:
   m_ObjectHideFlags: 0

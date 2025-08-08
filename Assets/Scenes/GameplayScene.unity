@@ -625,7 +625,7 @@ Transform:
   m_GameObject: {fileID: 88941453}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.79278797, y: -0.85231125, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -808,11 +808,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8922391667003776308, guid: 524ab59c0b8db834c821f3518203cf65, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.79278797
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8922391667003776308, guid: 524ab59c0b8db834c821f3518203cf65, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.85231125
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8922391667003776308, guid: 524ab59c0b8db834c821f3518203cf65, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6694,10 +6694,14 @@ MonoBehaviour:
   - pickup: {fileID: 1206580482448703102, guid: 17cdfb80ab04984428d16c67cc13a1ec, type: 3}
     spawnWeight: 2
   - pickup: {fileID: -3506674817183583546, guid: fd36e96fcf7fd9f448e8a8479cf89aee, type: 3}
+    spawnWeight: 1
+  - pickup: {fileID: 1343894621037833759, guid: 009f299d8df774043bf10dbb9effef3e, type: 3}
     spawnWeight: 2
   - pickup: {fileID: 7655594840356300392, guid: 21213e14ce2f24c45bb6ca0ea949a5e9, type: 3}
-    spawnWeight: 2
-  pickupProbability: 1
+    spawnWeight: 5
+  - pickup: {fileID: -7452858815853750209, guid: ae23bf9c3b1eb194a9cb411f45a1b886, type: 3}
+    spawnWeight: 3
+  pickupProbability: 0.5
 --- !u!1 &1952982132
 GameObject:
   m_ObjectHideFlags: 0
@@ -6752,6 +6756,16 @@ MonoBehaviour:
   playerPrefab: {fileID: 354190321523560944, guid: e875670101ee7f74b9ff7d45a1bc0324, type: 3}
   enemies:
   - {fileID: 866974179382765526, guid: e3178f785ff11fa478751542ce6a688c, type: 3}
+  - {fileID: 5090500115208669787, guid: ac98f58bb36543147b2c913c51297d1d, type: 3}
+  - {fileID: 2200947158520324694, guid: 93dec8720109e9541895030339c3e0cf, type: 3}
+  - {fileID: 9104219496184246683, guid: a75eaed65a5a0be4a8729dee1e5ce825, type: 3}
+  - {fileID: 2810936912735487427, guid: 1ab5e070449c868409e64dd3ddafc7a8, type: 3}
+  - {fileID: 882221697611725378, guid: 702710711f0bc7445b0bda0ca9407c64, type: 3}
+  - {fileID: 4641916873913941046, guid: 74ad6d7cf20ae454f8ad7a90fd03736e, type: 3}
+  - {fileID: 5135907506640146275, guid: d25abfa783f80624d983982d6fdbb0c3, type: 3}
+  - {fileID: 5039530807257563592, guid: d2f8fc68147525445874ed1739ca1d54, type: 3}
+  - {fileID: 5158369884233603834, guid: 63252613c49fc754f8a19ae1984e6968, type: 3}
+  - {fileID: 1475856039516377395, guid: 6b5206b0e66e73349bc98ff7e1a036b5, type: 3}
   targetTag: Effects
   scoreManager: {fileID: 1952982135}
   GameOver: 0
