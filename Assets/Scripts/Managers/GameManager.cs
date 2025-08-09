@@ -96,13 +96,24 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        // Check if there is already a player and destroy it
+        if (player != null)
+        {
+            Destroy(player.gameObject); // Destroy the existing player
+        }
+
+        // Instantiate a new player at the start
         player = Instantiate(playerPrefab, Vector2.zero, Quaternion.identity).GetComponent<Player>();
+        
         GameOver = false;
-        player.OnDeath += StopGame; // when notified of player's death, stop game
+
+        // Attach death event to stop the game when the player dies
+        player.OnDeath += StopGame; 
 
         OnGameStart.Invoke();
         StartCoroutine(GameStarter());
     }
+
 
     IEnumerator GameStarter()
     {
