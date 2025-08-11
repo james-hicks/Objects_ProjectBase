@@ -67,5 +67,5 @@
     "*.sln": "*.csproj"
   },
   "dotnet.defaultSolution": "Objects_ProjectBase.sln",
-  "cSpell.words": ["highscore", "Mathf", "Prefs"]
+  "cSpell.words": ["highscore", "Mathf", "powerup", "Prefs"]
 }
