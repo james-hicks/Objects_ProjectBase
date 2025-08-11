@@ -164,8 +164,8 @@ MonoBehaviour:
   enemyType: 1
   speed: 70
   ScoreValue: 300
-  explodeRange: 1
-  explosionRadius: 1
+  explodeRange: 3
+  explosionRadius: 3
   explodeDamage: 5
   baseHealth: 3
   explosionPrefab: {fileID: 4528491223845748948, guid: 25ed06dda9be8451c8a94cdd2242e786, type: 3}

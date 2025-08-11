@@ -83,6 +83,9 @@ public class Player : PlayableObject
     // rapid fire coroutine
     private IEnumerator RapidFire(float duration, float rate)
     {
+        Debug.Log($"RapidFire coroutine started with duration: {duration}, rate: {rate}");
+
+
         rapidFireActive = true;
         rapidFireRate = rate;
 
@@ -91,6 +94,7 @@ public class Player : PlayableObject
 
         while (elapsed < duration)
         {
+            Debug.Log($"RapidFire running, elapsed: {elapsed}");
             // Only fire while the mouse is held
             if (Input.GetMouseButton(0) && Time.time >= nextShotAt)
             {
@@ -103,6 +107,7 @@ public class Player : PlayableObject
         }
 
         rapidFireActive = false;
+        Debug.Log("Rapid fire ended");
         rapidFireRoutine = null;
     }
 
@@ -111,7 +116,7 @@ public class Player : PlayableObject
 
     public override void Die()
     {
-        Debug.Log("Player has died"); // Log death
+        Debug.Log("Player has died! Stack"); // Log death
         OnDeath?.Invoke(); // Call player's death
         Destroy(gameObject); // Destroy player
     }
