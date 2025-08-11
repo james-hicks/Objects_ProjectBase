@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 4866182238925101983, guid: 9d42d879433274c37be7d0eeb73a7513, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -116,8 +116,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.72, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5138177368104707074}
   m_Father: {fileID: 0}
@@ -164,8 +164,8 @@ MonoBehaviour:
   enemyType: 1
   speed: 70
   ScoreValue: 300
-  explodeRange: 3
-  explosionRadius: 3
+  explodeRange: 1
+  explosionRadius: 4
   explodeDamage: 5
   baseHealth: 3
   explosionPrefab: {fileID: 4528491223845748948, guid: 25ed06dda9be8451c8a94cdd2242e786, type: 3}

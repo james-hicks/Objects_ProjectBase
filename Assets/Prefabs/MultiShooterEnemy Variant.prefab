@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6427556726874110002, guid: 861ddd9a8d0bf4ec4908895219af12cc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8089019432624135523, guid: 861ddd9a8d0bf4ec4908895219af12cc, type: 3}
       propertyPath: m_Name
       value: MultiShooterEnemy Variant

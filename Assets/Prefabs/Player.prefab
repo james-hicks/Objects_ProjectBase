@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 8726834758204722622}
   - component: {fileID: 4962089582122390787}
   m_Layer: 0
-  m_Name: Triangle
+  m_Name: Shape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
