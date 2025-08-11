@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// This script makes the camera follow the player smoothly
 public class CameraFollow : MonoBehaviour
 {
     [SerializeField] private Transform target; // The player to follow

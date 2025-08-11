@@ -21,6 +21,7 @@ public class Player : PlayableObject
     private Coroutine rapidFireRoutine;
     private bool rapidFireActive;
     private float rapidFireRate;
+    private float minY = -4f; // Simple Y pos limit, player cannot go below this
 
     public bool IsRapidFireActive => rapidFireActive;
 
@@ -132,5 +133,11 @@ public class Player : PlayableObject
     {
         health.RegenHealth();
         OnHealthUpdate?.Invoke(health.GetCurrentHealth());
+
+        // Clamp the player's Y position
+        Vector3 pos = transform.position;
+        if (pos.y < minY)
+            pos.y = minY;
+        transform.position = pos;
     }
 }
