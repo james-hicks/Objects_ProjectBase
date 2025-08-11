@@ -6,7 +6,7 @@ public class ScoreManager : MonoBehaviour
 {
     private int score;
     private int highscore;
-   [SerializeField] private int nextLevel = 2000; // score to end level
+   //[SerializeField] private int nextLevel = 2000; // score to end level
 
     public UnityEvent OnScoreUpdated;
     public UnityEvent OnHighScoreUpdated;
@@ -23,11 +23,11 @@ public class ScoreManager : MonoBehaviour
         score += amount;
         OnScoreUpdated?.Invoke();
 
-        if (score >= nextLevel)
-        {
-            // Notify GameManager to go to next level 
-            GameManager.GetInstance().StopGame();
-        }
+        // if (score >= nextLevel)
+        // {
+        //     // Notify GameManager to go to next level 
+        //     GameManager.GetInstance().StopGame();
+        // }
 
 
         if (score > highscore)

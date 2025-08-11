@@ -94,7 +94,6 @@ public class Player : PlayableObject
 
         while (elapsed < duration)
         {
-            Debug.Log($"RapidFire running, elapsed: {elapsed}");
             // Only fire while the mouse is held
             if (Input.GetMouseButton(0) && Time.time >= nextShotAt)
             {
@@ -116,7 +115,7 @@ public class Player : PlayableObject
 
     public override void Die()
     {
-        Debug.Log("Player has died! Stack"); // Log death
+        Debug.Log("Player has died! StackTrace:" + Environment.StackTrace); // Log death
         OnDeath?.Invoke(); // Call player's death
         Destroy(gameObject); // Destroy player
     }

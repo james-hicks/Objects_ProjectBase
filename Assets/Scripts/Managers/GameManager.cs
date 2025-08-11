@@ -184,6 +184,7 @@ public class GameManager : MonoBehaviour
             Destroy(item.gameObject);
         }
 
+        Debug.Log("GameOver triggered! StackTrace: " + Environment.StackTrace);
         OnGameOver?.Invoke(); // call game over
     }
 
