@@ -4010,13 +4010,13 @@ MonoBehaviour:
   pickupSpawner: {fileID: 1940415845}
   playerPrefab: {fileID: 4467654723593208974, guid: dd1530e3b04742e40859eb180b3d9b3d, type: 3}
   enemies:
-  - {fileID: 8089019432624135523, guid: 44be64e756f2d3f40aefee1bb52b48eb, type: 3}
-  - {fileID: 3496358925418594841, guid: 27acfcc5acda3504084842118fc4c225, type: 3}
   - {fileID: 8089019432624135523, guid: 9b1c542a481594c7896a402c97f8f109, type: 3}
   - {fileID: 8089019432624135523, guid: e5b60adbaa5ae4796a794e53c66d08b7, type: 3}
   - {fileID: 8089019432624135523, guid: 861ddd9a8d0bf4ec4908895219af12cc, type: 3}
   - {fileID: 8089019432624135523, guid: 90fbdc7ecf8d4450da0a584f71ff5e4c, type: 3}
   - {fileID: 8306595886090896462, guid: 4d3745f23c77c8e46b95f7ea304fd04e, type: 3}
+  - {fileID: 8089019432624135523, guid: 44be64e756f2d3f40aefee1bb52b48eb, type: 3}
+  - {fileID: 3496358925418594841, guid: 27acfcc5acda3504084842118fc4c225, type: 3}
   scoreManager: {fileID: 1952982135}
   uiManager: {fileID: 517448762}
   GameOver: 0
