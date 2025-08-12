@@ -24,6 +24,8 @@ public class Player : PlayableObject
 
     public bool IsRapidFireActive => rapidFireActive;
 
+    public Animator anim;
+
 
 
     [Space]
@@ -42,6 +44,7 @@ public class Player : PlayableObject
         OnHealthSet?.Invoke(health.GetMaxHealth(), health.GetCurrentHealth());
         //healthBar.maxValue = health.GetMaxHealth();
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
         weapon = new Weapon("PlayerWeapon", weaponDamage, bulletSpeed); //initialize weapon
     }
@@ -71,6 +74,8 @@ public class Player : PlayableObject
             // Call weapon shoot with "Enemy" as targetTag
             weapon.Shoot(bulletPrefab, "Enemy", this);
         }
+
+        anim.Play("IsClick");
     }
 
     // Rapid fire during powerup time

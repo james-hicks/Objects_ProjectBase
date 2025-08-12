@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1588367066487196615}
   - component: {fileID: 7585196568298562166}
   - component: {fileID: 3063198931208551545}
+  - component: {fileID: 1655277496468379424}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -55,6 +56,7 @@ MonoBehaviour:
   weaponDamage: 1
   bulletSpeed: 10
   bulletPrefab: {fileID: 5095800986106887841, guid: 03c580b9803b38048b1b0328ecc3e84a, type: 3}
+  anim: {fileID: 0}
   healthBar: {fileID: 0}
 --- !u!114 &6347951459929369613
 MonoBehaviour:
@@ -144,6 +146,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   capacity: 5
+--- !u!95 &1655277496468379424
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4467654723593208974}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b0a91064216114a2c931a4eda055767d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6531864255424537303
 GameObject:
   m_ObjectHideFlags: 0
@@ -157,6 +181,7 @@ GameObject:
   - component: {fileID: 4580298395614477758}
   - component: {fileID: 4484605755566763616}
   - component: {fileID: 3333910751210658114}
+  - component: {fileID: 547652824320118659}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -261,6 +286,61 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bar: {fileID: 4991061282787111099}
   hideWhenIdle: 1
+--- !u!212 &547652824320118659
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531864255424537303}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: -8393796105078772163, guid: eb53d92c062c541328f74e4cfa2b1e98, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.98, y: 0.7}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &8263198172698264404
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,6 +351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8726834758204722622}
   - component: {fileID: 4962089582122390787}
+  - component: {fileID: 4105528043029251004}
   m_Layer: 0
   m_Name: Triangle
   m_TagString: Untagged
@@ -348,6 +429,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4105528043029251004
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8263198172698264404}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b0a91064216114a2c931a4eda055767d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8638291496074827378
 GameObject:
   m_ObjectHideFlags: 0
