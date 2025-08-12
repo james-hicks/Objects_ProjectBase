@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public ScoreManager scoreManager; // reference to the score manager
     public UIManager uiManager;// ref to UI Manager
     public bool GameOver = false; // flag to track if game is over
+    private Coroutine enemySpawnerRoutine; // Add this at the top with your fields
 
     public Action OnGameStart;
     public Action OnGameOver;
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
     /// Singleton Instance
     /// </summary>
     private static GameManager instance; // static instance for singleton access
+
     public static GameManager GetInstance()
     {
         return instance; // returns the singleton instance
@@ -62,10 +64,17 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator EnemySpawner()
     {
-        while (isEnemySpawning)
+        GameObject spawnPoints = GameObject.Find("SpawnPoints");
+        while (isEnemySpawning && player != null && spawnPoints != null)
         {
             yield return new WaitForSeconds(1f / spawnRate); // wait based on spawn rate
             CreateEnemy(); // spawn an enemy
+
+            // Only move spawnPoints if player still exists
+            if (player != null)
+                spawnPoints.transform.position = player.transform.position;
+
+            yield return null;
         }
     }
 
@@ -104,14 +113,26 @@ public class GameManager : MonoBehaviour
 
         // Instantiate a new player at the start
         player = Instantiate(playerPrefab, Vector2.zero, Quaternion.identity).GetComponent<Player>();
-        
+
         GameOver = false;
 
+        // Set camera to follow the new player
+        CameraFollow cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        if (cameraFollow != null)
+        {
+            cameraFollow.SetTarget(player.transform);
+        }
+
         // Attach death event to stop the game when the player dies
-        player.OnDeath += StopGame; 
+        player.OnDeath += StopGame;
 
         OnGameStart.Invoke();
         StartCoroutine(GameStarter());
+        
+        // Start the enemy spawner coroutine and keep a reference
+        if (enemySpawnerRoutine != null)
+            StopCoroutine(enemySpawnerRoutine);
+        enemySpawnerRoutine = StartCoroutine(EnemySpawner());
     }
 
 
@@ -134,8 +155,16 @@ public class GameManager : MonoBehaviour
     IEnumerator GameStopper()
     {
         isEnemySpawning = false;
+
         yield return new WaitForSeconds(2f); //give 2 secs before game really ends
         GameOver = true;
+
+        // Re-parent SpawnPoints to scene root so they're not destroyed with player
+        GameObject spawnPoints = GameObject.Find("SpawnPoints");
+        if (spawnPoints != null)
+        {
+            spawnPoints.transform.SetParent(null); // set parent to root
+        }
 
         // Delete all enemies from screen
         foreach (Enemy item in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
@@ -155,6 +184,7 @@ public class GameManager : MonoBehaviour
             Destroy(item.gameObject);
         }
 
+        Debug.Log("GameOver triggered! StackTrace: " + Environment.StackTrace);
         OnGameOver?.Invoke(); // call game over
     }
 

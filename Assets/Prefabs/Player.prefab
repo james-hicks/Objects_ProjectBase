@@ -32,8 +32,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3623033170902953756}
   - {fileID: 8726834758204722622}
@@ -85,7 +85,7 @@ Rigidbody2D:
   m_Mass: 50
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 2
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 3333910751210658114}
   - component: {fileID: 547652824320118659}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: FireUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -353,7 +353,7 @@ GameObject:
   - component: {fileID: 4962089582122390787}
   - component: {fileID: 4105528043029251004}
   m_Layer: 0
-  m_Name: Triangle
+  m_Name: Shape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300006, guid: 43f4268547ba04fdda3b1176be707940, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 618b93980ca509643bca22184276f6be, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

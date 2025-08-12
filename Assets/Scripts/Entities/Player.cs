@@ -21,6 +21,7 @@ public class Player : PlayableObject
     private Coroutine rapidFireRoutine;
     private bool rapidFireActive;
     private float rapidFireRate;
+    private float minY = -4f; // Simple Y pos limit, player cannot go below this
 
     public bool IsRapidFireActive => rapidFireActive;
 
@@ -88,6 +89,9 @@ public class Player : PlayableObject
     // rapid fire coroutine
     private IEnumerator RapidFire(float duration, float rate)
     {
+        Debug.Log($"RapidFire coroutine started with duration: {duration}, rate: {rate}");
+
+
         rapidFireActive = true;
         rapidFireRate = rate;
 
@@ -108,6 +112,7 @@ public class Player : PlayableObject
         }
 
         rapidFireActive = false;
+        Debug.Log("Rapid fire ended");
         rapidFireRoutine = null;
     }
 
@@ -116,7 +121,7 @@ public class Player : PlayableObject
 
     public override void Die()
     {
-        Debug.Log("Player has died"); // Log death
+        Debug.Log("Player has died! StackTrace:" + Environment.StackTrace); // Log death
         OnDeath?.Invoke(); // Call player's death
         Destroy(gameObject); // Destroy player
     }
@@ -133,5 +138,11 @@ public class Player : PlayableObject
     {
         health.RegenHealth();
         OnHealthUpdate?.Invoke(health.GetCurrentHealth());
+
+        // Clamp the player's Y position
+        Vector3 pos = transform.position;
+        if (pos.y < minY)
+            pos.y = minY;
+        transform.position = pos;
     }
 }
