@@ -7,9 +7,12 @@ public class PlayerInput : MonoBehaviour
     private float horizontal, vertical; // Input axes
     private Vector2 lookTarget;  // Mouse pos
 
+    public Animator anim;
+
     void Start()
     {
         player = GetComponent<Player>(); // Get Player component
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -23,6 +26,7 @@ public class PlayerInput : MonoBehaviour
             if (!player.IsRapidFireActive) // only if it is not power up time
             {
                 player.Shoot();   // Player shoots
+                anim.SetTrigger("IsShooting");
             }  
         }
 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: eb53d92c062c541328f74e4cfa2b1e98
+guid: f70f705613c514a1b9e9ce590f17a9ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8393796105078772163
-    second: clam1_0
+      213: -6873399256778757929
+    second: dash_green_sprite2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 90
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: clam1_0
+      name: dash_green_sprite2_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 27
-        width: 98
-        height: 70
+        x: 26
+        y: 32
+        width: 94
+        height: 113
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d3ee8b72aee338b80800000000000000
-      internalID: -8393796105078772163
+      spriteID: 7d8a444fac7cc90a0800000000000000
+      internalID: -6873399256778757929
       vertices: []
       indices: 
       edges: []
@@ -160,8 +160,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      clam1_0: -8393796105078772163
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

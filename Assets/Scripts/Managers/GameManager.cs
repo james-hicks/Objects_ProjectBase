@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CreateEnemy()
+    public void CreateEnemy()
     {
         // spawn a random enemy from the enemies array
         tempEnemy = Instantiate(enemies[UnityEngine.Random.Range(0, enemies.Length)]);

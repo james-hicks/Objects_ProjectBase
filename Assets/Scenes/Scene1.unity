@@ -4161,6 +4161,7 @@ MonoBehaviour:
   - {fileID: 8306595886090896462, guid: 4d3745f23c77c8e46b95f7ea304fd04e, type: 3}
   - {fileID: 8089019432624135523, guid: 44be64e756f2d3f40aefee1bb52b48eb, type: 3}
   - {fileID: 3496358925418594841, guid: 27acfcc5acda3504084842118fc4c225, type: 3}
+  - {fileID: 2062527475946553761, guid: 3c13697fa9d714b9d85eb261c347dbe1, type: 3}
   scoreManager: {fileID: 1952982135}
   uiManager: {fileID: 517448762}
   GameOver: 0
