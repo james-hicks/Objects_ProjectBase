@@ -2670,7 +2670,6 @@ MonoBehaviour:
   healthBar: {fileID: 1634744268}
   scoreText: {fileID: 298091209}
   highScoreText: {fileID: 950938701}
-  LevelText: {fileID: 716076239}
   player: {fileID: 0}
   rapidFireIndicator: {fileID: 922650012}
   rapidFireDurationBar: {fileID: 922650014}
@@ -6835,17 +6834,7 @@ MonoBehaviour:
     spawnWeight: 1
   - pickup: {fileID: 1343894621037833759, guid: 009f299d8df774043bf10dbb9effef3e, type: 3}
     spawnWeight: 2
-
-  - pickup: {fileID: 7655594840356300392, guid: 21213e14ce2f24c45bb6ca0ea949a5e9, type: 3}
-    spawnWeight: 5
-  - pickup: {fileID: -7452858815853750209, guid: ae23bf9c3b1eb194a9cb411f45a1b886, type: 3}
-    spawnWeight: 3
-  pickupProbability: 0.5
-
-  - pickup: {fileID: -7452858815853750209, guid: ae23bf9c3b1eb194a9cb411f45a1b886, type: 3}
-    spawnWeight: 3
-  pickupProbability: 0.4
-
+  pickupProbability: 0
 --- !u!1 &1952982132
 GameObject:
   m_ObjectHideFlags: 0
@@ -6894,24 +6883,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cinemachineCamera: {fileID: 0}
   playerPrefab: {fileID: 354190321523560944, guid: e875670101ee7f74b9ff7d45a1bc0324, type: 3}
-
-  enemies:
-  - {fileID: 866974179382765526, guid: e3178f785ff11fa478751542ce6a688c, type: 3}
-  - {fileID: 5090500115208669787, guid: ac98f58bb36543147b2c913c51297d1d, type: 3}
-  - {fileID: 2200947158520324694, guid: 93dec8720109e9541895030339c3e0cf, type: 3}
-  - {fileID: 9104219496184246683, guid: a75eaed65a5a0be4a8729dee1e5ce825, type: 3}
-  - {fileID: 2810936912735487427, guid: 1ab5e070449c868409e64dd3ddafc7a8, type: 3}
-  - {fileID: 882221697611725378, guid: 702710711f0bc7445b0bda0ca9407c64, type: 3}
-  - {fileID: 4641916873913941046, guid: 74ad6d7cf20ae454f8ad7a90fd03736e, type: 3}
-  - {fileID: 5135907506640146275, guid: d25abfa783f80624d983982d6fdbb0c3, type: 3}
-  - {fileID: 5039530807257563592, guid: d2f8fc68147525445874ed1739ca1d54, type: 3}
-  - {fileID: 5158369884233603834, guid: 63252613c49fc754f8a19ae1984e6968, type: 3}
-  - {fileID: 1475856039516377395, guid: 6b5206b0e66e73349bc98ff7e1a036b5, type: 3}
-  targetTag: Effects
-  scoreManager: {fileID: 1952982135}
   enemySpawning: {fileID: 1952982136}
-  pickupSpawner: {fileID: 1940415845}
-
+  pickupSpawner: {fileID: 0}
   GameOver: 0
   scoreManager: {fileID: 1952982135}
 --- !u!114 &1952982135
@@ -6947,21 +6920,6 @@ MonoBehaviour:
       - m_Target: {fileID: 517448762}
         m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: UpdateHighScore
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnLevelChange:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 517448762}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: UpdateLV
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
