@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Unity.Cinemachine;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -44,6 +45,8 @@ public class GameManager : MonoBehaviour
 
         instance = this;
 
+        AudioManager.Instance.PlaySound("menu");
+
         // Auto-find components if not assigned
         if (enemySpawning == null)
         {
@@ -54,6 +57,8 @@ public class GameManager : MonoBehaviour
         {
             pickupSpawner = FindFirstObjectByType<PickupSpawner>();
         }
+
+        
     }
 
     private void Update()
@@ -85,6 +90,8 @@ public class GameManager : MonoBehaviour
             Debug.LogError("EnemySpawning component not found!");
             return;
         }
+
+        AudioManager.Instance.PlaySound("gamemusic");
 
         // Stop any existing spawning
         enemySpawning.StopSpawning();
@@ -132,6 +139,8 @@ public class GameManager : MonoBehaviour
             enemySpawning.StopSpawning();
         }
 
+        AudioManager.Instance.PlaySound("playerdied");
+
         // Update high score
         if (scoreManager != null)
         {
@@ -143,8 +152,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator GameStopper()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         GameOver = true;
+        AudioManager.Instance.PlaySound("menu");
 
         // Clean up all enemies and effects
         if (enemySpawning != null)
