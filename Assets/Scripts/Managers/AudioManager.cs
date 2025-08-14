@@ -32,13 +32,15 @@ public class AudioManager : MonoBehaviour
         {
             case "menu":
                 audioSource.Stop();
-                audioSource.PlayOneShot(audioClips[0]);
                 audioSource.loop = true;
+                audioSource.clip = audioClips[0];
+                audioSource.Play();
                 break;
             case "gamemusic":
                 audioSource.Stop();
-                audioSource.PlayOneShot(audioClips[1]);
                 audioSource.loop = true;
+                audioSource.clip = audioClips[1];
+                audioSource.Play();
                 break;
             case "playerdied":
                 audioSource.Stop();
