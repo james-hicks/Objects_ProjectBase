@@ -18,7 +18,7 @@ public class Weapon
     {
         Bullet tempBullet = GameObject.Instantiate(_bullet, _object.transform.position, _object.transform.rotation);
         tempBullet.SetBullet(damage, _targetTag, bulletSpeed);
-
+        AudioManager.Instance.PlaySound("shoot");
         GameObject.Destroy(tempBullet.gameObject, _timeToDie);
     }
 
@@ -27,6 +27,7 @@ public class Weapon
     {
         Bullet tempBullet = GameObject.Instantiate(_bullet, _object.transform.position, rotation);
         tempBullet.SetBullet(damage, _targetTag, bulletSpeed);
+        AudioManager.Instance.PlaySound("shoot");
         GameObject.Destroy(tempBullet.gameObject, _timeToDie);
     }
 

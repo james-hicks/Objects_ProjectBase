@@ -44,6 +44,12 @@ public class AudioManager : MonoBehaviour
                 audioSource.Stop();
                 audioSource.PlayOneShot(audioClips[2]);
                 break;
+            case "shoot":
+                audioSource.PlayOneShot(audioClips[3]);
+                break;
+            case "explosion":
+                audioSource.PlayOneShot(audioClips[4]);
+                break;
             default:
                 Debug.LogWarning($"Sounds not found: {soundName}");
                 break;

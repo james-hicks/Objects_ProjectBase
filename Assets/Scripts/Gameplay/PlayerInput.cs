@@ -175,12 +175,14 @@ public class PlayerInput : MonoBehaviour
     {
         if (nukeCounter > 0)
         {
+            AudioManager.Instance.PlaySound("explosion");
+
             nukeCounter -= 1;
             explosionInstance = Instantiate(nukeExplosion, transform.position, quaternion.identity);
 
             PickupNuke.DestroyAllEnemies();
             UpdateCounterDisplay();
-
+            
             Debug.Log($"Nuke used! Remaining: {nukeCounter}");
         }
         else
