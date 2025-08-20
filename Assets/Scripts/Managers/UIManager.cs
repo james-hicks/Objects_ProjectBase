@@ -17,7 +17,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] Player player;
 
-
     [Header("Rapid Fire Indicator")]
     [SerializeField] private GameObject rapidFireIndicator;
     [SerializeField] private Slider rapidFireDurationBar;
@@ -37,7 +36,11 @@ public class UIManager : MonoBehaviour
 
     [Header("Shield Indicator")]
     [SerializeField] private GameObject shieldPrefab;
+    [SerializeField] private GameObject shieldIndicator;
+    [SerializeField] private Slider shieldDurationBar;
+    [SerializeField] private TextMeshProUGUI shieldTimeText;
     private bool shieldEnabled = false;
+    private bool isTrackingShield = false;
     private float shieldDuration;
     private float shieldStartTime;
 
@@ -45,7 +48,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject multiBulletIndicator;
     [SerializeField] private Slider multiBulletSlider;
     [SerializeField] private TMP_Text multiBulletStackText;
-
 
     private bool isTrackingMultiBullet = false;
     private float multiBulletStartTime;
@@ -62,17 +64,18 @@ public class UIManager : MonoBehaviour
         GameManager.GetInstance().OnGameStart += GameStarted;
         GameManager.GetInstance().OnGameOver += GameOver;
 
-        // Hide indicator initially
+        // Hide indicators initially
         if (rapidFireIndicator != null)
             rapidFireIndicator.SetActive(false);
-       
+
         if (multiBulletIndicator != null)
             multiBulletIndicator.SetActive(false);
 
         if (scatterShotIndicator != null)
             scatterShotIndicator.SetActive(false);
 
-       
+        if (shieldIndicator != null)
+            shieldIndicator.SetActive(false);
     }
 
     public void Update()
@@ -93,10 +96,10 @@ public class UIManager : MonoBehaviour
             UpdateMultiBulletIndicator();
         }
 
-        //if (shieldEnabled)
-        //{
-        //    UpdateShieldIndicator();
-        //}
+        if (isTrackingShield)
+        {
+            UpdateShieldIndicator();
+        }
     }
 
     //tracking the ShotBarrage
@@ -196,34 +199,105 @@ public class UIManager : MonoBehaviour
 
     public void StartShieldIndicator(float duration)
     {
+        // Start UI tracking
+        isTrackingShield = true;
         shieldEnabled = true;
         shieldStartTime = Time.time;
         shieldDuration = duration;
 
-        if (shieldPrefab != null)
+        // Show shield UI indicator
+        if (shieldIndicator != null)
+            shieldIndicator.SetActive(true);
+
+        if (shieldDurationBar != null)
         {
-            var shield = Instantiate(shieldPrefab, player.transform);
-            shield.GetComponent<CircleCollider2D>().isTrigger = false;
+            shieldDurationBar.maxValue = duration;
+            shieldDurationBar.value = duration;
         }
 
+        // Create shield visual
+        if (shieldPrefab != null && player != null)
+        {
+            // Destroy any existing shield first
+            GameObject existingShield = player.transform.Find("Shield")?.gameObject;
+            if (existingShield != null)
+            {
+                Destroy(existingShield);
+            }
+
+            // Create new shield
+            var shield = Instantiate(shieldPrefab, player.transform);
+            shield.transform.localPosition = Vector3.zero;
+            shield.transform.localScale = Vector3.one;
+            shield.name = "Shield";
+
+            // Set up the collider for bullet detection
+            CircleCollider2D shieldCollider = shield.GetComponent<CircleCollider2D>();
+            if (shieldCollider != null)
+            {
+                // Use trigger for bullet detection, but also add a solid collider for enemies
+                shieldCollider.isTrigger = true; // Trigger for bullet detection
+                shieldCollider.radius = 0.7f;
+            }
+
+            // Add another collider for enemy blocking (solid)
+            CircleCollider2D enemyBlocker = shield.AddComponent<CircleCollider2D>();
+            enemyBlocker.isTrigger = false; // Solid for enemy blocking
+            enemyBlocker.radius = 0.7f;
+
+            // Add the shield collision handler
+            ShieldCollider shieldScript = shield.GetComponent<ShieldCollider>();
+            if (shieldScript == null)
+            {
+                shield.AddComponent<ShieldCollider>();
+            }
+
+            Debug.Log("Shield created with bullet filtering!");
+        }
     }
 
-    //public void StopShieldIndicator()
-    //{
-    //    shieldEnabled = false;
-    //    if (shieldIndicator != null)
-    //        shieldIndicator.SetActive(false);
-    //}
+    public void StopShieldIndicator()
+    {
+        isTrackingShield = false;
+        shieldEnabled = false;
 
-    //public void UpdateShieldIndicator()
-    //{
-    //    float timeRemaining = shieldDuration - (Time.time - shieldStartTime);
-    //    if (timeRemaining <= 0)
-    //    {
-    //        StopShieldIndicator();
-    //        return;
-    //    }
-    //}
+        if (shieldIndicator != null)
+            shieldIndicator.SetActive(false);
+
+        // Destroy shield visual
+        if (player != null)
+        {
+            GameObject existingShield = player.transform.Find("Shield")?.gameObject;
+            if (existingShield != null)
+            {
+                Destroy(existingShield);
+                Debug.Log("Shield deactivated and visual destroyed!");
+            }
+        }
+    }
+
+    private void UpdateShieldIndicator()
+    {
+        float timeRemaining = shieldDuration - (Time.time - shieldStartTime);
+
+        if (timeRemaining <= 0)
+        {
+            StopShieldIndicator();
+            return;
+        }
+
+        // Update progress bar
+        if (shieldDurationBar != null)
+        {
+            shieldDurationBar.value = timeRemaining;
+        }
+
+        // Update time text
+        if (shieldTimeText != null)
+        {
+            shieldTimeText.text = $"Shield: {timeRemaining:F1}s";
+        }
+    }
 
     public void SetHealthBar(float maxHealth, float currentHealth)
     {
@@ -328,5 +402,4 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-
 }

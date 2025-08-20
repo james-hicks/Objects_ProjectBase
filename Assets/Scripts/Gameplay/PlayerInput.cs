@@ -37,6 +37,10 @@ public class PlayerInput : MonoBehaviour
     private int multiBulletStacks = 0;
     private const int maxMultiBulletStacks = 5;
 
+    [Header("Shield Pickup Info")]
+    private bool shieldActive = false;
+    private float shieldEndTime = 0f;
+
     void Start()
     {
         player = GetComponent<Player>();
@@ -109,7 +113,6 @@ public class PlayerInput : MonoBehaviour
         //scatter shot pick up
         if (scatterShotActive)
         {
-            
             scatterShotDuration -= Time.deltaTime;
             scatterShotCooldown -= Time.deltaTime;
 
@@ -138,6 +141,29 @@ public class PlayerInput : MonoBehaviour
 
             Debug.Log("Multi-Bullet ended!");
         }
+
+        // Check if shield ended
+        if (shieldActive && Time.time >= shieldEndTime)
+        {
+            shieldActive = false;
+
+            // Notify UIManager to stop shield indicator (this will also destroy the visual)
+            UIManager uiManager = FindFirstObjectByType<UIManager>();
+            if (uiManager != null)
+            {
+                uiManager.StopShieldIndicator();
+            }
+
+            Debug.Log("Shield ended!");
+        }
+
+
+    }
+
+
+    public bool IsShieldActive()
+    {
+        return shieldActive;
     }
 
     private void FixedUpdate()
@@ -182,7 +208,7 @@ public class PlayerInput : MonoBehaviour
 
             PickupNuke.DestroyAllEnemies();
             UpdateCounterDisplay();
-            
+
             Debug.Log($"Nuke used! Remaining: {nukeCounter}");
         }
         else
@@ -269,4 +295,20 @@ public class PlayerInput : MonoBehaviour
     {
         return multiBulletStacks;
     }
-}
+
+    public void ActivateShield(float duration)
+    {
+        shieldActive = true;
+        shieldEndTime = Time.time + duration;
+
+        // Notify UIManager to start shield indicator
+        UIManager uiManager = FindFirstObjectByType<UIManager>();
+        if (uiManager != null)
+        {
+            uiManager.StartShieldIndicator(duration);
+        }
+
+        Debug.Log($"Shield activated for {duration} seconds!");
+    }
+
+} // <- This is the ONLY closing brace for the class

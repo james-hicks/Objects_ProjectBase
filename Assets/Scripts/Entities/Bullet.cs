@@ -7,6 +7,12 @@ public class Bullet : MonoBehaviour
 
     private string targetTag;
 
+    // Public property to access target tag
+    public string TargetTag => targetTag;
+
+    // Alternative: public method to check if this is an enemy bullet
+    public bool IsEnemyBullet() => targetTag == "Player";
+
     public void SetBullet(float _damage, string _target, float _speed = 10)
     {
         this.speed = _speed;
@@ -32,10 +38,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag(targetTag)) 
+        if (!collision.gameObject.CompareTag(targetTag))
             return;
 
-        if(collision.TryGetComponent(out IDamageable damageable))
+        if (collision.TryGetComponent(out IDamageable damageable))
         {
             Damage(damageable);
         }

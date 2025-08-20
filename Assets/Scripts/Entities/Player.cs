@@ -100,12 +100,12 @@ public class Player : PlayableObject
 
     public override void GetDamage(float damage)
     {
-        PlayerInput input = FindAnyObjectByType<PlayerInput>();
-        //if (input.shieldActive)
-        //{
-        //    base.GetDamage(damage);
-        //    Debug.Log($"Player:79 - Shield actived. Player damage set to {damage}.");
-        //}
+        PlayerInput input = GetComponent<PlayerInput>();
+        if (input != null && input.IsShieldActive())  // <- Use the public method instead
+        {
+            Debug.Log("Damage blocked by shield!");
+            return; // Block all damage when shield is active
+        }
 
         base.GetDamage(damage);
         Debug.Log("Player took " + damage + " Damage! " + health.GetCurrentHealth());
