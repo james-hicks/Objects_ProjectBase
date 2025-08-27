@@ -6,6 +6,15 @@ using UnityEngine;
 
 public class NukePickup : Pickup
 {
+
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
+
     public override void OnPickup()
     {
         // Find the player's Inventory component
@@ -15,6 +24,8 @@ public class NukePickup : Pickup
         if (inv != null)
         {
             inv.AddNuke();
+            audioManager.PlaySFX(audioManager.nukeCollect);
+            
         }
 
         // Call base, destroy object
@@ -24,6 +35,7 @@ public class NukePickup : Pickup
     // Static method to activate the nuke effect
     public static void ActivateNuke()
     {
+        
         // Destroy all enemies in the scene
         foreach (Enemy item in FindObjectsByType<Enemy>(FindObjectsSortMode.None))
         {
@@ -41,5 +53,6 @@ public class NukePickup : Pickup
         {
             Destroy(item.gameObject);
         }
+        
     }
 }

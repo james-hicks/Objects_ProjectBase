@@ -5,6 +5,13 @@ public class HealthPickup : Pickup
     [SerializeField] private float minHealth;
     [SerializeField] private float maxHealth;
 
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     public override void OnPickup()
     {
         // Increase health
@@ -15,5 +22,6 @@ public class HealthPickup : Pickup
         player.health.AddHealth((int)health);
 
         base.OnPickup();
+        audioManager.PlaySFX(audioManager.healCollect);
     }
 }

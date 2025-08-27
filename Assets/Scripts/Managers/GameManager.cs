@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour
     public Action OnGameStart;
     public Action OnGameOver;
 
+    AudioManager audioManager;
+
+
     /// <summary>
     /// Singleton Instance
     /// </summary>
@@ -41,6 +44,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+
         if (instance != null)
         {
             Destroy(gameObject); // prevent multiple instances
@@ -105,6 +110,7 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        audioManager.PlaySFX(audioManager.gameStart);
         // Check if there is already a player and destroy it
         if (player != null)
         {
@@ -141,6 +147,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f); //give 2 secs before game actually starts
         isEnemySpawning = true; // start enemy spawning
         StartCoroutine(EnemySpawner());
+        
     }
 
     public void StopGame()
@@ -158,6 +165,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f); //give 2 secs before game really ends
         GameOver = true;
+        
 
         // Re-parent SpawnPoints to scene root so they're not destroyed with player
         GameObject spawnPoints = GameObject.Find("SpawnPoints");
@@ -186,6 +194,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("GameOver triggered! StackTrace: " + Environment.StackTrace);
         OnGameOver?.Invoke(); // call game over
+        audioManager.PlaySFX(audioManager.gameOver);
     }
 
 

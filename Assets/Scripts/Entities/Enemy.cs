@@ -13,6 +13,13 @@ public class Enemy : PlayableObject
 
     public int ScoreValue;
 
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     protected virtual void Start()
     {
         //target = GameObject.FindWithTag("Player").transform;
@@ -78,6 +85,10 @@ public class Enemy : PlayableObject
     {
         GameManager.GetInstance().scoreManager.IncrementScore(ScoreValue);
         GameManager.GetInstance().NotifyDeath(this);
+        audioManager.PlaySFX(audioManager.enemyKill);
+
+       // FindFirstObjectByType<AudioManager>().Play("EnemyKill");
+
         Destroy(gameObject);
     }
 
